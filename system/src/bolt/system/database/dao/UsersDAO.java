@@ -1,11 +1,17 @@
 package bolt.system.database.dao;
 
+import bolt.system.controllers.requests.UserRequestController;
 import bolt.system.database.storage.UserStorage;
 import bolt.system.entities.scooter.Scooter;
 import bolt.system.entities.scooter.ScooterStatus;
+import bolt.system.entities.user.BankAccountData;
+import bolt.system.entities.user.User;
 
 import java.util.List;
 
+/**
+ * invariants: userStorage
+ */
 public class UsersDAO {
 
 
@@ -15,41 +21,59 @@ public class UsersDAO {
         this.database = database;
     }
 
-
-    public void addNewScooter(Scooter scooter){
+    /**
+     * require - user not null; can make connection with DB
+     *
+     * ensure - new user entity should be added to UserStorage object storage;
+     * new storage.size = old storage.size + 1
+     *
+     * @param user - user to add
+     */
+    public void addNewUser(User user){
         //FIXME
     }
 
-
-    public void deleteScooter(long id){
+    /**
+     * require - require in database database exists User object with id equals param id
+     * ; can make connection with DB
+     * @param id - user id to delete
+     */
+    public void deleteUser(long id){
         //FIXME
 
     }
 
 
-
-    public Scooter getScooterDataById(long id){
+    /**
+     * require -  in database database exists User object with id equals param id
+     * ; can make connection with DB
+     * @param id - id of user to select
+     * @return user object with id: id
+     */
+    public User getUserById(long id){
         //FIXME
 
         return null;
     }
 
-    public ScooterStatus getScooterStatus(long id){
+    /**
+     * require - can make connection with DB
+     *
+     * @return List of User objects
+     */
+    public List<User> getAllSUsers(){
         //FIXME
 
         return null;
     }
 
-    public List<Scooter> getAllScooters(){
-        //FIXME
+    /**
+     *
+     * @param userId - user id in system
+     * @param bankAccountData - new bank account
+     */
+    public void changeUserBankAccount(long userId, BankAccountData bankAccountData){
 
-        return null;
-    }
-
-    public List<Scooter> getAvailableScooters(){
-        //FIXME
-
-        return null;
     }
 
 

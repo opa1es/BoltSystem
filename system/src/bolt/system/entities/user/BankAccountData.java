@@ -1,5 +1,8 @@
 package bolt.system.entities.user;
 
+/**
+ *  invariants: name, accountNumber
+ */
 public class BankAccountData {
 
 

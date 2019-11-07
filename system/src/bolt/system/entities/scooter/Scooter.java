@@ -2,6 +2,11 @@ package bolt.system.entities.scooter;
 
 import bolt.system.entities.coordinates.Coordinates;
 
+/**
+ * invariants: scooterId, chargeLevel, coordinates, current status
+ *
+ *
+ */
 public class Scooter {
 
     private long scooterId;

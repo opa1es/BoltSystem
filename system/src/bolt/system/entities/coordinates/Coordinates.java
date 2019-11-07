@@ -1,5 +1,10 @@
 package bolt.system.entities.coordinates;
 
+
+/**
+ *Invariants: x, y
+ *
+ */
 public class Coordinates {
 
      double x;
