@@ -1,5 +1,6 @@
 package bolt.system.entities.user;
 
+import bolt.system.entities.coordinates.Coordinates;
 import bolt.system.entities.user.BankAccountData;
 
 public class User {
@@ -10,6 +11,7 @@ public class User {
     private String userSecondName;
     private int phoneNumber;
     private BankAccountData bankAccount;
+    public Coordinates coordinates;
 
 
     public User(int userId, String userFirstName, String userSecondName, int phoneNumber, BankAccountData bankAccount) {
