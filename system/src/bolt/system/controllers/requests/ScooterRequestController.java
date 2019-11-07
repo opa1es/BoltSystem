@@ -4,6 +4,9 @@ package bolt.system.controllers.requests;
 import bolt.system.api.map.MapAPI;
 import bolt.system.entities.scooter.Scooter;
 
+/**
+ *
+ */
 public class ScooterRequestController {
 
     private boolean scooterStatus = false;
@@ -20,7 +23,7 @@ public class ScooterRequestController {
     }
 
     public MapAPI getCurrentPosition() {
-        return this.currentPosition.getCoordiantes();
+        return this.currentPosition.getCoordinates();
     }
 
     public short getScooterCharge() {

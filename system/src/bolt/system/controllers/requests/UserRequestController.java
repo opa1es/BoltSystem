@@ -1,6 +1,6 @@
 package bolt.system.controllers.requests;
 
-import bolt.system.entities.User;
+import bolt.system.entities.user.User;
 
 public class UserRequestController {
 
@@ -10,12 +10,26 @@ public class UserRequestController {
         this.user = user;
     }
 
+    /**
+     * Requires: User status = Offline
+     * Ensures: -
+     * Result: User status = Authorized
+     * @param data
+     * @return
+     */
     public String signIn(String data) {
         return "Authorized";
     }
 
+    /**
+     * Requires: User status = Authorized
+     * Ensures: -
+     * Result: User status = Offline
+     * @param data
+     * @return
+     */
     public String logOut(String data) {
-        return "Sign Out";
+        return "LogOut";
     }
 
     public String getUsername(String data) {
