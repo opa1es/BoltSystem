@@ -1,8 +1,11 @@
 package bolt.system.entities.user;
 
 import bolt.system.entities.coordinates.Coordinates;
-import bolt.system.entities.user.BankAccountData;
 
+
+/**
+ * invariants: userId, userFirstName, userSecondName, phoneNumber, bankAccount
+ */
 public class User {
 
 
