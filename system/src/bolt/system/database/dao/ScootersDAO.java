@@ -1,9 +1,11 @@
 package bolt.system.database.dao;
 
+import bolt.system.database.storage.Database;
 import bolt.system.database.storage.ScootersStorage;
 import bolt.system.entities.scooter.Scooter;
 import bolt.system.entities.scooter.ScooterStatus;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 
 /**
@@ -14,8 +16,12 @@ public class ScootersDAO {
 
     private ScootersStorage database;
 
-    public ScootersDAO(ScootersStorage database) {
-        this.database = database;
+    public ScootersDAO(Database database) {
+        this.database = database.getScootersStorage();
+    }
+
+    public ScootersDAO(){
+        this.database = new Database().getScootersStorage();
     }
 
     /**
@@ -27,7 +33,7 @@ public class ScootersDAO {
      * @param scooter - scooter to add
      */
     public void addNewScooter(Scooter scooter){
-        //FIXME
+        this.database.addNewScooter(scooter);
     }
 
     /**
@@ -36,7 +42,7 @@ public class ScootersDAO {
      * @param id - scooter id to delete
      */
     public void deleteScooter(long id){
-        //FIXME
+        this.database.deleteScooter(id);
 
     }
 
@@ -48,9 +54,8 @@ public class ScootersDAO {
      * @return scooter object with id: id
      */
     public Scooter getScooterById(long id){
-        //FIXME
+        return this.database.getScooterById(id);
 
-        return null;
     }
 
     /**
@@ -60,9 +65,9 @@ public class ScootersDAO {
      * @return return selected scooter status
      */
     public ScooterStatus getScooterStatus(long id){
-        //FIXME
 
-        return null;
+
+        return this.database.getScooterById(id).getCurrentStatus();
     }
     /**
      * require - can make connection with DB
@@ -70,9 +75,7 @@ public class ScootersDAO {
      * @return List of scooter objects
      */
     public List<Scooter> getAllScooters(){
-        //FIXME
-
-        return null;
+        return this.database.getAllScooters();
     }
     /**
      * require - can make connection with DB
@@ -80,9 +83,8 @@ public class ScootersDAO {
      * @return List of scooter objects
      */
     public List<Scooter> getAvailableScooters(){
-        //FIXME
 
-        return null;
+        return this.database.getAvailableScooters();
     }
     
 

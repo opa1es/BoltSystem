@@ -5,4 +5,8 @@ import bolt.system.entities.scooter.ScooterStatus;
 
 public class ScooterRequests {
 
+    
+
+
+
 }

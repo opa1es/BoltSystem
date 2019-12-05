@@ -17,19 +17,26 @@ public class User {
     public Coordinates coordinates;
 
 
-    public User(int userId, String userFirstName, String userSecondName, int phoneNumber, BankAccountData bankAccount) {
-        this.userId = userId;
+    public User( String userFirstName, String userSecondName, int phoneNumber, BankAccountData bankAccount) {
+//        this.userId = userId;
         this.userFirstName = userFirstName;
         this.userSecondName = userSecondName;
         this.phoneNumber = phoneNumber;
         this.bankAccount = bankAccount;
+    }
+    public User( String userFirstName, String userSecondName, int phoneNumber) {
+//        this.userId = userId;
+        this.userFirstName = userFirstName;
+        this.userSecondName = userSecondName;
+        this.phoneNumber = phoneNumber;
+//        this.bankAccount = bankAccount;
     }
 
     public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -63,5 +70,15 @@ public class User {
 
     public void setBankAccount(BankAccountData bankAccount) {
         this.bankAccount = bankAccount;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", userFirstName='" + userFirstName + '\'' +
+                ", userSecondName='" + userSecondName + '\'' +
+                ", phoneNumber=" + phoneNumber +
+                '}';
     }
 }

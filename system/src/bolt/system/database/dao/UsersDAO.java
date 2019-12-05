@@ -1,11 +1,13 @@
 package bolt.system.database.dao;
 
 import bolt.system.controllers.requests.UserRequestController;
+import bolt.system.database.storage.Database;
 import bolt.system.database.storage.UserStorage;
 
 import bolt.system.entities.user.BankAccountData;
 import bolt.system.entities.user.User;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 
 /**
@@ -16,8 +18,13 @@ public class UsersDAO {
 
     private UserStorage database;
 
-    public UsersDAO(UserStorage database) {
-        this.database = database;
+    public UsersDAO(Database database) {
+        this.database = database.getUserStorage();
+    }
+
+    public UsersDAO(){
+        this.database = new Database().getUserStorage();
+
     }
 
     /**
@@ -29,7 +36,7 @@ public class UsersDAO {
      * @param user - user to add
      */
     public void addNewUser(User user){
-        //FIXME
+        this.database.addNewUser(user);
     }
 
     /**
@@ -38,7 +45,7 @@ public class UsersDAO {
      * @param id - user id to delete
      */
     public void deleteUser(long id){
-        //FIXME
+        this.database.deleteUser(id);
 
     }
 
@@ -50,9 +57,8 @@ public class UsersDAO {
      * @return user object with id: id
      */
     public User getUserById(long id){
-        //FIXME
+        return this.database.getUserById(id);
 
-        return null;
     }
 
     /**
@@ -61,9 +67,7 @@ public class UsersDAO {
      * @return List of User objects
      */
     public List<User> getAllSUsers(){
-        //FIXME
-
-        return null;
+        return this.database.getAllUsers();
     }
 
     /**
@@ -72,7 +76,7 @@ public class UsersDAO {
      * @param bankAccountData - new bank account
      */
     public void changeUserBankAccount(long userId, BankAccountData bankAccountData){
-
+        this.database.changeUserBankAccount(userId,bankAccountData);
     }
 
 

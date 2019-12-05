@@ -15,8 +15,8 @@ public class Scooter {
     private ScooterStatus currentStatus;
 
 
-    public Scooter(long scooterId, short chargeLevel, Coordinates coordinates, ScooterStatus currentStatus) {
-        this.scooterId = scooterId;
+    public Scooter(short chargeLevel, Coordinates coordinates, ScooterStatus currentStatus) {
+//        this.scooterId = scooterId;
         this.chargeLevel = chargeLevel;
         this.coordinates = coordinates;
         this.currentStatus = currentStatus;
@@ -55,4 +55,13 @@ public class Scooter {
     }
 
 
+    @Override
+    public String toString() {
+        return "Scooter{" +
+                "scooterId=" + scooterId +
+                ", chargeLevel=" + chargeLevel +
+                ", coordinates=" + coordinates +
+                ", currentStatus=" + currentStatus +
+                '}';
+    }
 }

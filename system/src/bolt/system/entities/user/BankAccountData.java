@@ -9,7 +9,7 @@ public class BankAccountData {
     private String name;
     private String accountNumber;
 
-
+    //TODO: Check if input data length is ok
     public BankAccountData(String name, String accountNumber) {
         this.name = name;
         this.accountNumber = accountNumber;

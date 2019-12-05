@@ -14,7 +14,7 @@ public class UserStorage {
 
 
     private List<User> usersStorage;
-
+    private Long userIdGenerator = 0L;
 
     public UserStorage(List<User> usersStorage) {
         this.usersStorage = usersStorage;
@@ -33,7 +33,8 @@ public class UserStorage {
      * @param user - user to add
      */
     public void addNewUser(User user) {
-        if (usersStorage.contains(user)) {
+        if (!usersStorage.contains(user)) {
+            user.setUserId(this.userIdGenerator++);
             this.usersStorage.add(user);
         }
 

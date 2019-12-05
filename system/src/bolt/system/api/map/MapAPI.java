@@ -9,4 +9,8 @@ public class MapAPI {
     public MapAPI getCoordinates() {
         return null;
     }
+
+    /**
+     *  TODO: new fun : GET SCOOTERS CLOSE TO USER()
+     */
 }

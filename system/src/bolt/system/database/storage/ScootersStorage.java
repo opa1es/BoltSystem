@@ -14,7 +14,7 @@ public class ScootersStorage {
 
 
     private List<Scooter> scootersStorage;
-
+    private long scooterIdGenerator = 0L;
 
     public ScootersStorage(List<Scooter> scootersStorage) {
         this.scootersStorage = scootersStorage;
@@ -34,7 +34,8 @@ public class ScootersStorage {
      * @param scooter - scooter to add
      */
     public void addNewScooter(Scooter scooter) {
-        if (scootersStorage.contains(scooter)) {
+        if (!scootersStorage.contains(scooter)) {
+            scooter.setScooterId(this.scooterIdGenerator++);
             this.scootersStorage.add(scooter);
         }
 
@@ -77,7 +78,7 @@ public class ScootersStorage {
      *
      * @return List of scooter objects
      */
-    public List<Scooter> addAvailableScooters() {
+    public List<Scooter> getAvailableScooters() {
 
         return this.scootersStorage.stream().filter(scooter -> scooter.getChargeLevel() > 10 && scooter.getCurrentStatus() == ScooterStatus.FREE).collect(Collectors.toList());
     }
