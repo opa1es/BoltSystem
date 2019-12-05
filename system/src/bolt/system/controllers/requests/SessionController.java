@@ -7,7 +7,7 @@ import java.util.List;
 public class SessionController {
 
     private List<ScooterActiveSessionData> scooterActiveSessionDataStorage;
-
+    private long sessionIdGenerator = 0L;
 
     public SessionController() {
         this.scooterActiveSessionDataStorage = new ArrayList<>();
@@ -20,6 +20,7 @@ public class SessionController {
 
     public void addNewSession(ScooterActiveSessionData session) {
         if (!checkIfSessionIsActive(session)) {
+            session.setSessionId(sessionIdGenerator++);
             scooterActiveSessionDataStorage.add(session);
         }
 
@@ -39,4 +40,10 @@ public class SessionController {
         scooterActiveSessionDataStorage.remove(sessionToDelete);
 
     }
+
+
+
+
+
+
 }

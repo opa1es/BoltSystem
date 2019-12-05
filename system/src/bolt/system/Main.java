@@ -1,5 +1,6 @@
 package bolt.system;
 
+import bolt.system.api.map.MapAPI;
 import bolt.system.database.dao.ScootersDAO;
 import bolt.system.database.dao.UsersDAO;
 import bolt.system.database.storage.Database;
@@ -26,6 +27,10 @@ public class Main {
         User user1 = new User("user1", "user1", 56512341);
         User user2 = new User("user2", "user2", 565151511);
 
+        user1.setCoordinates(new Coordinates(100,100));
+        user2.setCoordinates(new Coordinates(1000,1000));
+
+
         UserStorage userStorage = new UserStorage();
         userStorage.addNewUser(user1);
         userStorage.addNewUser(user2);
@@ -49,14 +54,15 @@ public class Main {
         UsersDAO usersDAO = new UsersDAO(database);
         ScootersDAO scootersDAO = new ScootersDAO(database);
 
+        //MAP API
+        MapAPI mapAPI = new MapAPI();
+
         //PRINT
 
         System.out.println(usersDAO.getAllSUsers());
         System.out.println(scootersDAO.getAllScooters());
 
-        //System.out.println(scootersStorage.getAllScooters());
-        //scootersStorage.deleteScooter(1);
-        //System.out.println(scootersStorage.getAllScooters());
+        System.out.println(mapAPI.getCloseScooters(user2.coordinates,database));
 
     }
 

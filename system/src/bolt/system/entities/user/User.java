@@ -72,6 +72,13 @@ public class User {
         this.bankAccount = bankAccount;
     }
 
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
     @Override
     public String toString() {
         return "User{" +
@@ -81,4 +88,6 @@ public class User {
                 ", phoneNumber=" + phoneNumber +
                 '}';
     }
+
+
 }

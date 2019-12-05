@@ -5,6 +5,7 @@ import java.time.ZonedDateTime;
 
 public class ScooterActiveSessionData {
 
+    private long sessionId;
     private long userId;
     private long scooterId;
     private ZonedDateTime started;
@@ -14,6 +15,14 @@ public class ScooterActiveSessionData {
         this.userId = userId;
         this.scooterId = scooterId;
         this.started = ZonedDateTime.now();
+    }
+
+    public long getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(long sessionId) {
+        this.sessionId = sessionId;
     }
 
     public long getUserId() {

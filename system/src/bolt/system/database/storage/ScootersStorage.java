@@ -13,8 +13,10 @@ import java.util.stream.Collectors;
 public class ScootersStorage {
 
 
+    public static final short LOW_POWER_VALUE = 10;
     private List<Scooter> scootersStorage;
     private long scooterIdGenerator = 0L;
+
 
     public ScootersStorage(List<Scooter> scootersStorage) {
         this.scootersStorage = scootersStorage;
@@ -80,7 +82,7 @@ public class ScootersStorage {
      */
     public List<Scooter> getAvailableScooters() {
 
-        return this.scootersStorage.stream().filter(scooter -> scooter.getChargeLevel() > 10 && scooter.getCurrentStatus() == ScooterStatus.FREE).collect(Collectors.toList());
+        return this.scootersStorage.stream().filter(scooter -> scooter.getChargeLevel() > LOW_POWER_VALUE && scooter.getCurrentStatus() == ScooterStatus.FREE).collect(Collectors.toList());
     }
 
     public void changeScooterStatus(long id, ScooterStatus newStatus){

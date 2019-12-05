@@ -22,6 +22,12 @@ public class Scooter {
         this.currentStatus = currentStatus;
     }
 
+    //TODO: CHECK DYNAMICALLY SCOOTER STATUS
+    public ScooterStatus checkScooterProperties(){
+        return null;
+
+    }
+
     public long getScooterId() {
         return scooterId;
     }

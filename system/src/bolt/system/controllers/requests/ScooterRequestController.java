@@ -22,9 +22,9 @@ public class ScooterRequestController {
         this.scooterStatus = status;
     }
 
-    public MapAPI getCurrentPosition() {
-        return this.currentPosition.getCoordinates();
-    }
+    //public MapAPI getCurrentPosition() {
+    //    return this.currentPosition.getCoordinates();
+    //}
 
     public short getScooterCharge() {
         return this.scooter.getChargeLevel();
