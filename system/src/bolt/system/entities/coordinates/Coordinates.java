@@ -7,8 +7,8 @@ package bolt.system.entities.coordinates;
  */
 public class Coordinates {
 
-     double x;
-     double y;
+     private double x;
+     private double y;
 
     public Coordinates(double x, double y) {
         this.x = x;

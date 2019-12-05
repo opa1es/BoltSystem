@@ -2,8 +2,7 @@ package bolt.system.database.dao;
 
 import bolt.system.controllers.requests.UserRequestController;
 import bolt.system.database.storage.UserStorage;
-import bolt.system.entities.scooter.Scooter;
-import bolt.system.entities.scooter.ScooterStatus;
+
 import bolt.system.entities.user.BankAccountData;
 import bolt.system.entities.user.User;
 
