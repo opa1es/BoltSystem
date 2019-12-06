@@ -1,7 +1,9 @@
 package bolt.system.entities.user;
 
+import java.math.BigDecimal;
+
 /**
- *  invariants: name, accountNumber
+ * invariants: name, accountNumber
  */
 public class BankAccountData {
 
@@ -29,5 +31,9 @@ public class BankAccountData {
 
     public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
+    }
+
+    public BigDecimal wallet() {
+        return BigDecimal.valueOf(0);
     }
 }
