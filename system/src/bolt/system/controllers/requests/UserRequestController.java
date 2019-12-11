@@ -58,9 +58,5 @@ public class UserRequestController {
     }
 
 
-//TODO:implement payment request handler
-    //TODO:implement scooter rent request handler
-    //TODO:implement scooter rent stop request handler
-
 
 }
