@@ -11,14 +11,14 @@ import bolt.system.entities.scooter.Scooter;
 import bolt.system.entities.scooter.ScooterStatus;
 import bolt.system.entities.user.BankAccountData;
 import bolt.system.entities.user.User;
+import bolt.system.util.TimeCalculator;
 
 import javax.xml.crypto.Data;
+import java.util.Date;
 
 public class Main {
 
-
-    public static void main(String[] args) {
-
+    public static void caseDataSetup() {
         //USERS:
 
         BankAccountData bankAccount1 = new BankAccountData("poopa loopa", "13372281313");
@@ -27,8 +27,8 @@ public class Main {
         User user1 = new User("user1", "user1", 56512341);
         User user2 = new User("user2", "user2", 565151511);
 
-        user1.setCoordinates(new Coordinates(100,100));
-        user2.setCoordinates(new Coordinates(1000,1000));
+        user1.setCoordinates(new Coordinates(100, 100));
+        user2.setCoordinates(new Coordinates(1000, 1000));
 
 
         UserStorage userStorage = new UserStorage();
@@ -50,7 +50,7 @@ public class Main {
         scootersStorage.addNewScooter(scooter2);
 
         //DATABASE:
-        Database database = new Database(userStorage,scootersStorage);
+        Database database = new Database(userStorage, scootersStorage);
         UsersDAO usersDAO = new UsersDAO(database);
         ScootersDAO scootersDAO = new ScootersDAO(database);
 
@@ -62,7 +62,23 @@ public class Main {
         System.out.println(usersDAO.getAllSUsers());
         System.out.println(scootersDAO.getAllScooters());
 
-        System.out.println(mapAPI.getCloseScooters(user2.coordinates,database));
+        System.out.println(mapAPI.getCloseScooters(user2.coordinates, database));
+
+    }
+    private static void checkTime(){
+        //case1();
+        Date date1 = new Date(System.currentTimeMillis());
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Date date2 = new Date(System.currentTimeMillis());
+
+        System.out.println(TimeCalculator.getDifferenceInMinutes(date1,date2));
+
+    }
+    public static void main(String[] args) throws InterruptedException {
 
     }
 

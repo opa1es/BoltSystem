@@ -4,8 +4,6 @@ import bolt.system.entities.coordinates.Coordinates;
 
 /**
  * invariants: scooterId, chargeLevel, coordinates, current status
- *
- *
  */
 public class Scooter {
 
@@ -22,9 +20,12 @@ public class Scooter {
         this.currentStatus = currentStatus;
     }
 
-    //TODO: CHECK DYNAMICALLY SCOOTER STATUS
-    public ScooterStatus checkScooterProperties(){
-        return null;
+    public boolean checkIfScooterHaveEnoughFuel() {
+        if (this.chargeLevel < 10) {
+          //  this.currentStatus = ScooterStatus.NO_FUEL;
+            return false;
+        }
+        return true;
 
     }
 

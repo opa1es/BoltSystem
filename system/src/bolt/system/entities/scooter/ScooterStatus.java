@@ -5,5 +5,6 @@ public enum ScooterStatus {
     RENTED,
     LOST,
     UNKNOWN,
-    BROKEN
+    BROKEN,
+    NO_FUEL
 }

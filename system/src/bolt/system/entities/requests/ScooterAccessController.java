@@ -6,27 +6,29 @@ import bolt.system.database.dao.ScootersDAO;
 import bolt.system.entities.coordinates.Coordinates;
 import bolt.system.entities.scooter.Scooter;
 import bolt.system.entities.scooter.ScooterStatus;
+import bolt.system.util.RidePriceCalculator;
+import bolt.system.util.TimeCalculator;
+
+import java.util.Date;
 
 public class ScooterAccessController {
 
+    private ScootersDAO scootersDAO;
+    private long userId;
+    //private long requestedScooterId;
+    private SessionController sessionController;
 
-    public ScooterAccessController(ScootersDAO scootersDAO, long userId, long requestedScooterId, SessionController sessionController) {
+    public ScooterAccessController(ScootersDAO scootersDAO, long userId, SessionController sessionController) {
         this.scootersDAO = scootersDAO;
         this.userId = userId;
-        this.requestedScooterId = requestedScooterId;
+
         this.sessionController = sessionController;
     }
 
-    private ScootersDAO scootersDAO;
-    private long userId;
-    private long requestedScooterId;
-    private SessionController sessionController;
 
-
-
-    public boolean tryToGetScooter(){
-        ScooterActiveSessionData session = new ScooterActiveSessionData(this.userId,this.requestedScooterId);
-        if(!sessionController.checkIfSessionIsActive(session)){
+    public boolean tryToGetScooter(long requestedScooterId) {
+        ScooterActiveSessionData session = new ScooterActiveSessionData(this.userId, requestedScooterId);
+        if (!sessionController.checkIfSessionIsActive(session)) {
             sessionController.addNewSession(session);
             scootersDAO.getScooterById(requestedScooterId).setCurrentStatus(ScooterStatus.RENTED);
             return true;
@@ -34,21 +36,24 @@ public class ScooterAccessController {
         return false;
     }
 
-    public double closeScooterSessionAndGetSessionLengthIsMinutes(){
-        ScooterActiveSessionData session = new ScooterActiveSessionData(this.userId,this.requestedScooterId);
+    public double closeScooterSessionAndGetPrice(long requestedScooterId) {
+        ScooterActiveSessionData session = new ScooterActiveSessionData(this.userId, requestedScooterId);
 
-        if(sessionController.checkIfSessionIsActive(session)){
-            //FIXME: change this, to calculate real time
-            double timeDifferenceInMinutes = 1;
+        if (sessionController.checkIfSessionIsActive(session)) {
+            double timeDifferenceInMinutes = TimeCalculator.getDifferenceInMinutes(session.getStarted(), new Date(System.currentTimeMillis()));
+
             sessionController.closeSessionByUserId(userId);
-            //FIXME: dynamically check scooter status and set it here
-            scootersDAO.getScooterById(requestedScooterId).setCurrentStatus(ScooterStatus.FREE);
-            return timeDifferenceInMinutes;
-        }
-        //TODO: change in future to not cause bugs
-        return -1;
-    }
+            Scooter scooterToCheckAndUpdate = scootersDAO.getScooterById(requestedScooterId);
 
+            if (scooterToCheckAndUpdate.checkIfScooterHaveEnoughFuel()) {
+                scootersDAO.getScooterById(requestedScooterId).setCurrentStatus(ScooterStatus.FREE);
+            } else {
+                scooterToCheckAndUpdate.setCurrentStatus(ScooterStatus.NO_FUEL);
+            }
+            return RidePriceCalculator.getMoneyForRide(timeDifferenceInMinutes);
+        }
+        throw new IllegalArgumentException("unknown session");
+    }
 
 
 }

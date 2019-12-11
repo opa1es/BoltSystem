@@ -2,19 +2,20 @@ package bolt.system.controllers.requests;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.Date;
 
 public class ScooterActiveSessionData {
 
     private long sessionId;
     private long userId;
     private long scooterId;
-    private ZonedDateTime started;
+    private Date started;
 
 
     public ScooterActiveSessionData(long userId, long scooterId) {
         this.userId = userId;
         this.scooterId = scooterId;
-        this.started = ZonedDateTime.now();
+        this.started = new Date(System.currentTimeMillis());
     }
 
     public long getSessionId() {
@@ -33,7 +34,7 @@ public class ScooterActiveSessionData {
         return scooterId;
     }
 
-    public ZonedDateTime getStarted() {
+    public Date getStarted() {
         return started;
     }
 }
