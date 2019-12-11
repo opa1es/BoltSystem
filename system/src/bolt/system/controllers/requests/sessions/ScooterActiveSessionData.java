@@ -1,4 +1,4 @@
-package bolt.system.controllers.requests;
+package bolt.system.controllers.requests.sessions;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;

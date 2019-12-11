@@ -1,42 +1,66 @@
 package bolt.system.controllers.requests;
 
+
+import bolt.system.api.bank.BankAPI;
+import bolt.system.api.map.representers.ScootersRepresentationObj;
+import bolt.system.api.map.representers.ScootersRepresenter;
+import bolt.system.database.dao.UsersDAO;
+import bolt.system.entities.user.BankAccountData;
 import bolt.system.entities.user.User;
 
+import java.math.BigDecimal;
+import java.util.List;
+
+/**
+ * here user requests. Communication point with user <-> controller
+ */
 public class UserRequestController {
 
-    private User user;
 
-    public UserRequestController(User user) {
-        this.user = user;
+    private ScooterAccessController scooterAccessController;
+    private UsersDAO usersDAO;
+    private ScootersRepresenter scootersRepresenter;
+    private BankAPI bankAPI;
+
+    public UserRequestController(ScooterAccessController scooterAccessController, UsersDAO usersDAO, ScootersRepresenter scootersRepresenter, BankAPI bankAPI) {
+        this.scooterAccessController = scooterAccessController;
+        this.usersDAO = usersDAO;
+        this.scootersRepresenter = scootersRepresenter;
+        this.bankAPI = bankAPI;
     }
 
-    /**
-     * Requires: User status = Offline
-     * Ensures: -
-     * Result: User status = Authorized
-     * @param data
-     * @return
-     */
-    public String signIn(String data) {
-        return "Authorized";
+
+    public boolean tryMakePayment(long userId, BigDecimal moneyAmount) {
+        BankAccountData userBankAccount = usersDAO.getUserById(userId).getBankAccount();
+        if (!bankAPI.checkIfAccountExists(userBankAccount)) {
+            return false;
+        }
+        //TODO: check correctness later, currently too lazy
+        return bankAPI.makePayment(userBankAccount, moneyAmount);
     }
 
-    /**
-     * Requires: User status = Authorized
-     * Ensures: -
-     * Result: User status = Offline
-     * @param data
-     * @return
-     */
-    public String logOut(String data) {
-        return "LogOut";
+    public boolean tryRentScooter(long userId, long scooterId) {
+        return scooterAccessController.tryToGetScooter(userId, scooterId);
     }
 
-    public String getUsername(String data) {
-        return "Username";
+    public boolean tryStopScooterRenting(long userId, long scooterId) {
+        BigDecimal moneyForRide = scooterAccessController.closeScooterSessionAndGetPrice(userId, scooterId);
+        if (moneyForRide == null) {
+            return false;
+        } else {
+            return tryMakePayment(userId, moneyForRide);
+        }
     }
 
-    public String getUserWallet(String data) {
-        return "Wallet";
+    public List<ScootersRepresentationObj> getAvailableScooters(long userId) {
+        User selectedUser = usersDAO.getUserById(userId);
+        return scootersRepresenter.getAvailableScootersRepresentationData(selectedUser.getCoordinates());
     }
+
+
+//TODO:implement payment request handler
+    //TODO:implement scooter rent request handler
+    //TODO:implement scooter rent stop request handler
+
+
 }

@@ -20,28 +20,29 @@ public class ScootersDAO {
         this.database = database.getScootersStorage();
     }
 
-    public ScootersDAO(){
+    public ScootersDAO() {
         this.database = new Database().getScootersStorage();
     }
 
     /**
      * require - scooter not null; can make connection with DB
-     *
+     * <p>
      * ensure - new scooter entity should be added to scooterStorage object storage;
      * new storage.size = old storage.size + 1
      *
      * @param scooter - scooter to add
      */
-    public void addNewScooter(Scooter scooter){
+    public void addNewScooter(Scooter scooter) {
         this.database.addNewScooter(scooter);
     }
 
     /**
      * require - require in database database exists Scooter object with id equals param id
      * ; can make connection with DB
+     *
      * @param id - scooter id to delete
      */
-    public void deleteScooter(long id){
+    public void deleteScooter(long id) {
         this.database.deleteScooter(id);
 
     }
@@ -50,10 +51,11 @@ public class ScootersDAO {
     /**
      * require -  in database database exists Scooter object with id equals param id
      * ; can make connection with DB
+     *
      * @param id - id of scooter to select
      * @return scooter object with id: id
      */
-    public Scooter getScooterById(long id){
+    public Scooter getScooterById(long id) {
         return this.database.getScooterById(id);
 
     }
@@ -64,30 +66,30 @@ public class ScootersDAO {
      * @param id - scooter to select
      * @return return selected scooter status
      */
-    public ScooterStatus getScooterStatus(long id){
+    public ScooterStatus getScooterStatus(long id) {
 
 
         return this.database.getScooterById(id).getCurrentStatus();
     }
+
     /**
      * require - can make connection with DB
      *
      * @return List of scooter objects
      */
-    public List<Scooter> getAllScooters(){
+    public List<Scooter> getAllScooters() {
         return this.database.getAllScooters();
     }
+
     /**
      * require - can make connection with DB
      *
      * @return List of scooter objects
      */
-    public List<Scooter> getAvailableScooters(){
+    public List<Scooter> getAvailableScooters() {
 
         return this.database.getAvailableScooters();
     }
-    
-
 
 
 }

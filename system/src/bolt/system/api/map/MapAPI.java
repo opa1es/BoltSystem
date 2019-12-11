@@ -1,5 +1,6 @@
 package bolt.system.api.map;
 
+import bolt.system.database.dao.ScootersDAO;
 import bolt.system.database.storage.Database;
 import bolt.system.entities.coordinates.Coordinates;
 import bolt.system.entities.scooter.Scooter;
@@ -11,8 +12,8 @@ public class MapAPI {
 
     private final double CLOSURE_VALUE = 400;
 
-    public List<Long> getCloseScooters(Coordinates userCoordinates, Database database){
-        return database.getScootersStorage().getAvailableScooters().stream().filter(scooter ->
+    public List<Long> getCloseScooters(Coordinates userCoordinates, ScootersDAO scootersDAO){
+        return scootersDAO.getAvailableScooters().stream().filter(scooter ->
                 new Distance(scooter.getCoordinates(),userCoordinates).getDistanceBetweenPoints() <= CLOSURE_VALUE)
                 .map(Scooter::getScooterId)
                 .collect(Collectors.toList());

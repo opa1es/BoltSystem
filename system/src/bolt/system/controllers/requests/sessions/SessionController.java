@@ -1,5 +1,7 @@
-package bolt.system.controllers.requests;
+package bolt.system.controllers.requests.sessions;
 
+
+import bolt.system.controllers.requests.sessions.ScooterActiveSessionData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ public class SessionController {
         }
 
     }
-
+        //checks if user or scooter already exist in processes
     public boolean checkIfSessionIsActive(ScooterActiveSessionData session) {
         return scooterActiveSessionDataStorage.stream().anyMatch(activeSession -> activeSession.getUserId() == session.getUserId() || activeSession.getScooterId() == session.getScooterId());
     }

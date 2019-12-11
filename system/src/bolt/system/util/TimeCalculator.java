@@ -11,6 +11,6 @@ public class TimeCalculator {
 
     public static double getDifferenceInMinutes(Date datatime1, Date datatime2) {
 
-        return new BigDecimal((double) Math.abs(datatime1.getTime() - datatime2.getTime()) / (1000 * 60)).setScale(3, RoundingMode.HALF_UP).doubleValue();
+        return BigDecimal.valueOf((double) Math.abs(datatime1.getTime() - datatime2.getTime()) / (1000 * 60)).setScale(3, RoundingMode.HALF_UP).doubleValue();
     }
 }

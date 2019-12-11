@@ -20,7 +20,7 @@ public class Scooter {
         this.currentStatus = currentStatus;
     }
 
-    public boolean checkIfScooterHaveEnoughFuel() {
+    public boolean checkIfScooterHaveEnoughCharge() {
         if (this.chargeLevel < 10) {
           //  this.currentStatus = ScooterStatus.NO_FUEL;
             return false;

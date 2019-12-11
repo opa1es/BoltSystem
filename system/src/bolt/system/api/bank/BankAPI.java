@@ -11,32 +11,31 @@ import java.util.Map;
 public class BankAPI {
 
     private String requestUrl = "http://banksite.com";
-    private Boolean statusEXISTS = true;
-    private Map<BankAccountData,Double> bankAccounts;
+    private Map<BankAccountData, BigDecimal> bankAccounts;
 
 
     public BankAPI() {
-        bankAccounts =new HashMap<>();
+        bankAccounts = new HashMap<>();
     }
 
-    public void addNewBankAccountData(BankAccountData newBankAccount, double moneyAmount) {
-        if (!bankAccounts.containsValue(newBankAccount)) {
+    public void addNewBankAccountData(BankAccountData newBankAccount, BigDecimal moneyAmount) {
+        if (!bankAccounts.containsKey(newBankAccount)) {
             bankAccounts.put(newBankAccount, moneyAmount);
         }
     }
 
-
-
-    public Boolean isValitCard(String accountNumber) {
-        return (requestUrl + accountNumber).equals("EXIST");
+    public boolean makePayment(BankAccountData bankAccount, BigDecimal money) {
+        if (bankAccounts.containsKey(bankAccount)) {
+            BigDecimal oldMoneyValue = bankAccounts.get(bankAccount);
+            bankAccounts.replace(bankAccount, oldMoneyValue.subtract(money));
+        } else {
+            return false;
+        }
+        return true;
     }
 
-    public Boolean makePayment(String accountNumber, BigDecimal money) {
-        return false;
-    }
 
-
-    public boolean checkIfAccountExists(BankAccountData bankAccountData){
-        return bankAccounts.containsKey(bankAccountData);
+    public boolean checkIfAccountExists(BankAccountData bankAccount) {
+        return bankAccounts.containsKey(bankAccount);
     }
 }

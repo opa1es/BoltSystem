@@ -1,6 +1,7 @@
 package bolt.system.entities.user;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * invariants: name, accountNumber
@@ -35,5 +36,10 @@ public class BankAccountData {
 
     public BigDecimal wallet() {
         return BigDecimal.valueOf(0);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * name.hashCode() + accountNumber.hashCode();
     }
 }
