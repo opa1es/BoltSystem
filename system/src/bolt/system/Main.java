@@ -5,6 +5,7 @@ import bolt.system.api.map.MapAPI;
 import bolt.system.api.map.representers.ScootersRepresentationObj;
 import bolt.system.api.map.representers.ScootersRepresenter;
 import bolt.system.controllers.requests.ScooterAccessController;
+import bolt.system.controllers.requests.ScooterRequestController;
 import bolt.system.controllers.requests.UserRequestController;
 import bolt.system.controllers.requests.sessions.SessionController;
 import bolt.system.database.dao.ScootersDAO;
@@ -20,7 +21,6 @@ import bolt.system.entities.user.User;
 import bolt.system.util.RidePriceCalculator;
 import bolt.system.util.TimeCalculator;
 
-import javax.xml.crypto.Data;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -119,10 +119,10 @@ public class Main {
 
         //SYSTEM SETUP:
         SessionController sessionController = new SessionController();
-        ScooterAccessController scooterAccessController = new ScooterAccessController(scootersDAO, sessionController);
+        ScooterAccessController scooterAccessController = new ScooterAccessController(scootersDAO, usersDAO, sessionController,bankAPI);
         ScootersRepresenter scootersRepresenter = new ScootersRepresenter(scootersDAO);
         UserRequestController userRequestController = new UserRequestController(scooterAccessController, usersDAO, scootersRepresenter, bankAPI);
-
+        ScooterRequestController scooterRequestController = new ScooterRequestController(scooterAccessController);
         //---------------------------------------------------RUN--------------------------------------------------
         long userId = 0;
         long requesterScooterId = 1;
@@ -132,12 +132,14 @@ public class Main {
         System.out.println(availableScootersForUser);
         System.out.println(userRequestController.tryRentScooter(userId, requesterScooterId));
         System.out.println(sessionController.getScooterActiveSessionDataStorage());
+        // WORKS.
+        //        scooterRequestController.abortRide(requesterScooterId);
         try {
-            Thread.sleep(20000);
+            Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println(userRequestController.tryStopScooterRenting(userId, requesterScooterId));
+        System.out.println(userRequestController.tryStopScooterRenting(requesterScooterId));
         System.out.println(sessionController.getScooterActiveSessionDataStorage());
 
         System.out.println(bankAPI.getBankAccounts());

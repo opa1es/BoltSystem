@@ -1,10 +1,13 @@
 package bolt.system.controllers.requests;
 
+import bolt.system.api.bank.BankAPI;
 import bolt.system.controllers.requests.sessions.ScooterActiveSessionData;
 import bolt.system.controllers.requests.sessions.SessionController;
 import bolt.system.database.dao.ScootersDAO;
+import bolt.system.database.dao.UsersDAO;
 import bolt.system.entities.scooter.Scooter;
 import bolt.system.entities.scooter.ScooterStatus;
+import bolt.system.entities.user.BankAccountData;
 import bolt.system.util.RidePriceCalculator;
 import bolt.system.util.TimeCalculator;
 
@@ -15,15 +18,17 @@ public class ScooterAccessController {
 
 
     private ScootersDAO scootersDAO;
+    private UsersDAO usersDAO;
     private SessionController sessionController;
     private static BigDecimal MAX_MONEY_FOR_RIDE = BigDecimal.valueOf(20);
+    private BankAPI bankAPI;
 
-
-    public ScooterAccessController(ScootersDAO scootersDAO, SessionController sessionController) {
+    public ScooterAccessController(ScootersDAO scootersDAO, UsersDAO usersDAO, SessionController sessionController, BankAPI bankAPI) {
         this.scootersDAO = scootersDAO;
+        this.usersDAO = usersDAO;
         this.sessionController = sessionController;
+        this.bankAPI = bankAPI;
     }
-
 
     public boolean tryToGetScooter(long userId, long requestedScooterId) {
         ScooterActiveSessionData session = new ScooterActiveSessionData(userId, requestedScooterId);
@@ -35,14 +40,14 @@ public class ScooterAccessController {
         return false;
     }
 
-    public BigDecimal closeScooterSessionAndGetPrice(long userId, long requestedScooterId) {
-        ScooterActiveSessionData session = sessionController.getSessionByUserId(userId);
-
+    public boolean closeScooterSessionAndMakePayment(long requestedScooterId) {
+        ScooterActiveSessionData session = sessionController.getSessionByScooterId(requestedScooterId);
+        BigDecimal moneyForRide;
         if (sessionController.checkIfSessionIsActive(session)) {
             System.out.println(session.getStarted() + "  || " + new Date(System.currentTimeMillis()));
             double timeDifferenceInMinutes = TimeCalculator.getDifferenceInMinutes(session.getStarted(), new Date(System.currentTimeMillis()));
 
-            sessionController.closeSessionByUserId(userId);
+            sessionController.closeSessionByScooterId(requestedScooterId);
             Scooter scooterToCheckAndUpdate = scootersDAO.getScooterById(requestedScooterId);
 
             if (scooterToCheckAndUpdate.checkIfScooterHaveEnoughCharge()) {
@@ -50,18 +55,30 @@ public class ScooterAccessController {
             } else {
                 scooterToCheckAndUpdate.setCurrentStatus(ScooterStatus.NO_FUEL);
             }
-//            System.out.println("time diff: " + timeDifferenceInMinutes);
-            BigDecimal moneyForRide = RidePriceCalculator.getMoneyForRide(timeDifferenceInMinutes);
+            moneyForRide = RidePriceCalculator.getMoneyForRide(timeDifferenceInMinutes);
 
             //TODO: plz check here correctness. Im retarded
+
             if (moneyForRide.compareTo(MAX_MONEY_FOR_RIDE) > -1) {
-                return MAX_MONEY_FOR_RIDE;
+                moneyForRide = MAX_MONEY_FOR_RIDE;
             }
-//            System.out.println("money:" + moneyForRide);
-            return moneyForRide;
+            //TODO: make payment
+
+            return tryMakePayment(session.getUserId(), moneyForRide);
+
         }
-        //FIXME: maybe not the best solution??
-        return null;
+        return false;
+    }
+
+    public boolean tryMakePayment(long userId, BigDecimal moneyAmount) {
+
+        BankAccountData userBankAccount = usersDAO.getUserById(userId).getBankAccount();
+        if (!bankAPI.checkIfAccountExists(userBankAccount)) {
+
+            return false;
+        }
+        //TODO: check correctness later, currently too lazy
+        return bankAPI.makePayment(userBankAccount, moneyAmount);
     }
 
     public ScootersDAO getScootersDAO() {

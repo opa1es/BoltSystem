@@ -20,40 +20,21 @@ public class UserRequestController {
     private ScooterAccessController scooterAccessController;
     private UsersDAO usersDAO;
     private ScootersRepresenter scootersRepresenter;
-    private BankAPI bankAPI;
 
     public UserRequestController(ScooterAccessController scooterAccessController, UsersDAO usersDAO, ScootersRepresenter scootersRepresenter, BankAPI bankAPI) {
         this.scooterAccessController = scooterAccessController;
         this.usersDAO = usersDAO;
         this.scootersRepresenter = scootersRepresenter;
-        this.bankAPI = bankAPI;
     }
 
-
-    public boolean tryMakePayment(long userId, BigDecimal moneyAmount) {
-        BankAccountData userBankAccount = usersDAO.getUserById(userId).getBankAccount();
-//        System.out.println(userBankAccount);
-        if (!bankAPI.checkIfAccountExists(userBankAccount)) {
-            return false;
-        }
-        //TODO: check correctness later, currently too lazy
-        System.out.println("try payment");
-
-        return bankAPI.makePayment(userBankAccount, moneyAmount);
-    }
 
     public boolean tryRentScooter(long userId, long scooterId) {
         return scooterAccessController.tryToGetScooter(userId, scooterId);
     }
 
-    public boolean tryStopScooterRenting(long userId, long scooterId) {
-        BigDecimal moneyForRide = scooterAccessController.closeScooterSessionAndGetPrice(userId, scooterId);
-        if (moneyForRide == null) {
-            return false;
-        } else {
-//            System.out.println("try payment");
-            return tryMakePayment(userId, moneyForRide);
-        }
+    public boolean tryStopScooterRenting(long scooterId) {
+        return scooterAccessController.closeScooterSessionAndMakePayment(scooterId);
+
     }
 
     public List<ScootersRepresentationObj> getAvailableScooters(long userId) {
