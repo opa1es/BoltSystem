@@ -32,10 +32,13 @@ public class UserRequestController {
 
     public boolean tryMakePayment(long userId, BigDecimal moneyAmount) {
         BankAccountData userBankAccount = usersDAO.getUserById(userId).getBankAccount();
+//        System.out.println(userBankAccount);
         if (!bankAPI.checkIfAccountExists(userBankAccount)) {
             return false;
         }
         //TODO: check correctness later, currently too lazy
+        System.out.println("try payment");
+
         return bankAPI.makePayment(userBankAccount, moneyAmount);
     }
 
@@ -48,6 +51,7 @@ public class UserRequestController {
         if (moneyForRide == null) {
             return false;
         } else {
+//            System.out.println("try payment");
             return tryMakePayment(userId, moneyForRide);
         }
     }
@@ -56,7 +60,6 @@ public class UserRequestController {
         User selectedUser = usersDAO.getUserById(userId);
         return scootersRepresenter.getAvailableScootersRepresentationData(selectedUser.getCoordinates());
     }
-
 
 
 }

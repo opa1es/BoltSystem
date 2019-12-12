@@ -85,7 +85,7 @@ public class ScootersStorage {
         return this.scootersStorage.stream().filter(scooter -> scooter.getChargeLevel() > LOW_POWER_VALUE && scooter.getCurrentStatus() == ScooterStatus.FREE).collect(Collectors.toList());
     }
 
-    public void changeScooterStatus(long id, ScooterStatus newStatus){
+    public void changeScooterStatus(long id, ScooterStatus newStatus) {
         for (Scooter scooter : scootersStorage) {
             if (scooter.getScooterId() == id) {
                 scooter.setCurrentStatus(newStatus);

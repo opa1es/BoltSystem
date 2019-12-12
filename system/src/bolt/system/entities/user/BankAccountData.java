@@ -42,4 +42,12 @@ public class BankAccountData {
     public int hashCode() {
         return 31 * name.hashCode() + accountNumber.hashCode();
     }
+
+    @Override
+    public String toString() {
+        return "BankAccountData{" +
+                "name='" + name + '\'' +
+                ", accountNumber='" + accountNumber + '\'' +
+                '}';
+    }
 }

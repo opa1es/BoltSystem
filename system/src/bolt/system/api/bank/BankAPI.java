@@ -28,6 +28,7 @@ public class BankAPI {
         if (bankAccounts.containsKey(bankAccount)) {
             BigDecimal oldMoneyValue = bankAccounts.get(bankAccount);
             bankAccounts.replace(bankAccount, oldMoneyValue.subtract(money));
+//            System.out.println("payment was made!");
         } else {
             return false;
         }
@@ -37,5 +38,10 @@ public class BankAPI {
 
     public boolean checkIfAccountExists(BankAccountData bankAccount) {
         return bankAccounts.containsKey(bankAccount);
+    }
+
+
+    public Map<BankAccountData, BigDecimal> getBankAccounts() {
+        return bankAccounts;
     }
 }

@@ -27,7 +27,7 @@ public class ScooterAccessController {
 
     public boolean tryToGetScooter(long userId, long requestedScooterId) {
         ScooterActiveSessionData session = new ScooterActiveSessionData(userId, requestedScooterId);
-        if (!sessionController.checkIfSessionIsActive(session)) {
+        if (!sessionController.checkIfSessionIsActive(session) && scootersDAO.getScooterStatus(requestedScooterId) == ScooterStatus.FREE) {
             sessionController.addNewSession(session);
             scootersDAO.getScooterById(requestedScooterId).setCurrentStatus(ScooterStatus.RENTED);
             return true;
@@ -36,9 +36,10 @@ public class ScooterAccessController {
     }
 
     public BigDecimal closeScooterSessionAndGetPrice(long userId, long requestedScooterId) {
-        ScooterActiveSessionData session = new ScooterActiveSessionData(userId, requestedScooterId);
+        ScooterActiveSessionData session = sessionController.getSessionByUserId(userId);
 
         if (sessionController.checkIfSessionIsActive(session)) {
+            System.out.println(session.getStarted() + "  || " + new Date(System.currentTimeMillis()));
             double timeDifferenceInMinutes = TimeCalculator.getDifferenceInMinutes(session.getStarted(), new Date(System.currentTimeMillis()));
 
             sessionController.closeSessionByUserId(userId);
@@ -49,17 +50,20 @@ public class ScooterAccessController {
             } else {
                 scooterToCheckAndUpdate.setCurrentStatus(ScooterStatus.NO_FUEL);
             }
+//            System.out.println("time diff: " + timeDifferenceInMinutes);
             BigDecimal moneyForRide = RidePriceCalculator.getMoneyForRide(timeDifferenceInMinutes);
 
             //TODO: plz check here correctness. Im retarded
             if (moneyForRide.compareTo(MAX_MONEY_FOR_RIDE) > -1) {
                 return MAX_MONEY_FOR_RIDE;
             }
+//            System.out.println("money:" + moneyForRide);
             return moneyForRide;
         }
         //FIXME: maybe not the best solution??
         return null;
     }
+
     public ScootersDAO getScootersDAO() {
         return scootersDAO;
     }
@@ -67,7 +71,6 @@ public class ScooterAccessController {
     public SessionController getSessionController() {
         return sessionController;
     }
-
 
 
 }

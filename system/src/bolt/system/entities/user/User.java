@@ -17,14 +17,15 @@ public class User {
     public Coordinates coordinates;
 
 
-    public User( String userFirstName, String userSecondName, int phoneNumber, BankAccountData bankAccount) {
+    public User(String userFirstName, String userSecondName, int phoneNumber, BankAccountData bankAccount) {
 //        this.userId = userId;
         this.userFirstName = userFirstName;
         this.userSecondName = userSecondName;
         this.phoneNumber = phoneNumber;
         this.bankAccount = bankAccount;
     }
-    public User( String userFirstName, String userSecondName, int phoneNumber) {
+
+    public User(String userFirstName, String userSecondName, int phoneNumber) {
 //        this.userId = userId;
         this.userFirstName = userFirstName;
         this.userSecondName = userSecondName;
@@ -79,6 +80,7 @@ public class User {
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
+
     @Override
     public String toString() {
         return "User{" +

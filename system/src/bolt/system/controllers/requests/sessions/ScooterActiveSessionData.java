@@ -18,6 +18,15 @@ public class ScooterActiveSessionData {
         this.started = new Date(System.currentTimeMillis());
     }
 
+    @Override
+    public String toString() {
+        return "ScooterActiveSessionData{" +
+                "sessionId=" + sessionId +
+                ", userId=" + userId +
+                ", scooterId=" + scooterId +
+                '}';
+    }
+
     public long getSessionId() {
         return sessionId;
     }

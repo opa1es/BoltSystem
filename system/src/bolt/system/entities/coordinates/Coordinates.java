@@ -2,13 +2,13 @@ package bolt.system.entities.coordinates;
 
 
 /**
- *Invariants: x, y
- *
+ * Invariants: x, y
  */
+
 public class Coordinates {
 
-     private double x;
-     private double y;
+    private double x;
+    private double y;
 
     public Coordinates(double x, double y) {
         this.x = x;

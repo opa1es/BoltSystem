@@ -22,7 +22,7 @@ public class Scooter {
 
     public boolean checkIfScooterHaveEnoughCharge() {
         if (this.chargeLevel < 10) {
-          //  this.currentStatus = ScooterStatus.NO_FUEL;
+            //  this.currentStatus = ScooterStatus.NO_FUEL;
             return false;
         }
         return true;

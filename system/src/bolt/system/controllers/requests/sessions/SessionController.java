@@ -27,7 +27,8 @@ public class SessionController {
         }
 
     }
-        //checks if user or scooter already exist in processes
+
+    //checks if user or scooter already exist in processes
     public boolean checkIfSessionIsActive(ScooterActiveSessionData session) {
         return scooterActiveSessionDataStorage.stream().anyMatch(activeSession -> activeSession.getUserId() == session.getUserId() || activeSession.getScooterId() == session.getScooterId());
     }
@@ -38,14 +39,21 @@ public class SessionController {
     }
 
     public void closeSessionByScooterId(long scooterId) {
-        ScooterActiveSessionData sessionToDelete = this.scooterActiveSessionDataStorage.stream().filter(session -> session.getUserId() == scooterId).findFirst().orElse(null);
+        ScooterActiveSessionData sessionToDelete = this.scooterActiveSessionDataStorage.stream().filter(session -> session.getScooterId() == scooterId).findFirst().orElse(null);
         scooterActiveSessionDataStorage.remove(sessionToDelete);
 
     }
 
+    public ScooterActiveSessionData getSessionByUserId(long userId) {
+        return this.scooterActiveSessionDataStorage.stream().filter(session -> session.getUserId() == userId).findFirst().orElse(null);
 
+    }
 
+    public ScooterActiveSessionData getSessionByScooterId(long scooterId) {
+        return this.scooterActiveSessionDataStorage.stream().filter(session -> session.getScooterId() == scooterId).findFirst().orElse(null);
+    }
 
-
-
+    public List<ScooterActiveSessionData> getScooterActiveSessionDataStorage() {
+        return scooterActiveSessionDataStorage;
+    }
 }

@@ -76,7 +76,6 @@ public class UsersDAO {
      */
 
 //    public boolean checkIfUserExists(U)
-
     public void changeUserBankAccount(long userId, BankAccountData bankAccountData) {
         this.database.changeUserBankAccount(userId, bankAccountData);
     }
