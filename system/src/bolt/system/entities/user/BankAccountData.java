@@ -8,7 +8,6 @@ import java.util.Objects;
  */
 public class BankAccountData {
 
-
     private String name;
     private String accountNumber;
 

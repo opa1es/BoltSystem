@@ -12,11 +12,9 @@ import java.util.stream.Collectors;
  */
 public class ScootersStorage {
 
-
     public static final short LOW_POWER_VALUE = 10;
     private List<Scooter> scootersStorage;
     private long scooterIdGenerator = 0L;
-
 
     public ScootersStorage(List<Scooter> scootersStorage) {
         this.scootersStorage = scootersStorage;
@@ -35,6 +33,14 @@ public class ScootersStorage {
      *
      * @param scooter - scooter to add
      */
+    /*@ public normal_behavior
+      @ requires scooter != null && !contains(scooter)
+      @ ensures \result contains(scooter)
+      @ ensures (\forall Scooter scooters;
+                         scooters != scooter;
+                         contains(scooters) <==> \old(contains(scooters)));
+      @ ensures scootersStorage.size == \old(scooterStorage.size) + 1
+    * */
     public void addNewScooter(Scooter scooter) {
         if (!scootersStorage.contains(scooter)) {
             scooter.setScooterId(this.scooterIdGenerator++);

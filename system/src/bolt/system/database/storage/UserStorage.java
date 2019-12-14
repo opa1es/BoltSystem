@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 /**
  * invariants: userStorage
  */
-public class UserStorage {
+public class  UserStorage {
 
 
     private List<User> usersStorage;
