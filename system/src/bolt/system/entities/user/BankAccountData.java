@@ -3,16 +3,28 @@ package bolt.system.entities.user;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-/**
- * invariants: name, accountNumber
- */
 public class BankAccountData {
 
-    private String name;
-    private String accountNumber;
+    /*@ public static invariant
+      @ (\forall BankAccountData p1, p2;
+      @     p1 != p2 ==> p1.name != p2.name)
+      @*/
 
-    //TODO: JML: Check if input data length is ok
-    public BankAccountData(String name, String accountNumber) {
+    private /*@ spec_public @*/ String name;
+    private /*@ spec_public @*/ String accountNumber;
+
+    //@ public invariant name != null;
+    //@ public invariant accountNumber != null;
+
+    /*@ public normal_behavior
+      @ requires name.length > 0;
+      @ requires accountNumber.length > 0;
+      @ assignable this.name;
+      @ assignable this.accountNumber;
+      @ ensures this.name == name;
+      @ ensures this.accountNumber == accountNumber;
+      @*/
+    public BankAccountData(/*@ non_null @*/ String name, /*@ non_null @*/ String accountNumber) {
         this.name = name;
         this.accountNumber = accountNumber;
     }

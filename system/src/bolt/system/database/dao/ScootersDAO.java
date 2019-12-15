@@ -12,8 +12,6 @@ import java.util.List;
  * invariants: database
  */
 public class ScootersDAO {
-
-
     private ScootersStorage database;
 
     public ScootersDAO(Database database) {

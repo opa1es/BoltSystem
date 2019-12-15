@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Map;
 
 public class BankAPI {
+    private /*@ spec_public @*/ String requestUrl = "http://banksite.com";
+    private /*@ spec_public nullable @*/ Map<BankAccountData, BigDecimal> bankAccounts;
 
-    private String requestUrl = "http://banksite.com";
-    private Map<BankAccountData, BigDecimal> bankAccounts;
-
-
+    /*@ assignable bankAccount;
+     */
     public BankAPI() {
         bankAccounts = new HashMap<>();
     }
@@ -28,18 +28,16 @@ public class BankAPI {
         if (bankAccounts.containsKey(bankAccount)) {
             BigDecimal oldMoneyValue = bankAccounts.get(bankAccount);
             bankAccounts.replace(bankAccount, oldMoneyValue.subtract(money));
-//            System.out.println("payment was made!");
+            System.out.println("Payment was made!");
         } else {
             return false;
         }
         return true;
     }
 
-
     public boolean checkIfAccountExists(BankAccountData bankAccount) {
         return bankAccounts.containsKey(bankAccount);
     }
-
 
     public Map<BankAccountData, BigDecimal> getBankAccounts() {
         return bankAccounts;

@@ -9,10 +9,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ScootersRepresenter {
+    private /*@ spec_public nullable @*/ ScootersDAO scootersDAO;
+    private /*@ spec_public nullable @*/ MapAPI mapAPI;
 
-    private ScootersDAO scootersDAO;
-    private MapAPI mapAPI;
-
+    /*@ requires scootersDAO != null;
+      @ assignable mapAPI;
+      @ ensures this.scootersDAO = scootersDAO;
+      @*/
     public ScootersRepresenter(ScootersDAO scootersDAO) {
         this.scootersDAO = scootersDAO;
         this.mapAPI = new MapAPI();

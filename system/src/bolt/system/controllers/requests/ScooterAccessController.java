@@ -15,14 +15,21 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class ScooterAccessController {
+    private static final BigDecimal MAX_MONEY_FOR_RIDE = BigDecimal.valueOf(20);
+    private /*@ spec_public nullable @*/ ScootersDAO scootersDAO;
+    private /*@ spec_public nullable @*/ UsersDAO usersDAO;
+    private /*@ spec_public nullable @*/ SessionController sessionController;
+    private /*@ spec_public nullable @*/ BankAPI bankAPI;
 
-
-    private ScootersDAO scootersDAO;
-    private UsersDAO usersDAO;
-    private SessionController sessionController;
-    private static BigDecimal MAX_MONEY_FOR_RIDE = BigDecimal.valueOf(20);
-    private BankAPI bankAPI;
-
+    /*@ requires scootersDAO != null;
+      @ requires usersDAO != null;
+      @ requires sessionController != null;
+      @ requires bankAPI != null;
+      @ ensures this.scootersDAO == scootersDAO;
+      @ ensures this.usersDAO == usersDAO;
+      @ ensures this.sessionController == sessionController;
+      @ ensures this.bankAPI == bankAPI;
+     */
     public ScooterAccessController(ScootersDAO scootersDAO, UsersDAO usersDAO, SessionController sessionController, BankAPI bankAPI) {
         this.scootersDAO = scootersDAO;
         this.usersDAO = usersDAO;
