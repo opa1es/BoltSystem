@@ -33,8 +33,8 @@ public class Main {
         BankAccountData bankAccount1 = new BankAccountData("poopa loopa", "13372281313");
         BankAccountData bankAccount2 = new BankAccountData("artjom pekush", "000000000");
         // System.out.println(bankAccount1.hashCode());
-        User user1 = new User("user1", "user1", 56512341);
-        User user2 = new User("user2", "user2", 565151511);
+        User user1 = new User("user1", "user1", "56512341",bankAccount1);
+        User user2 = new User("user2", "user2", "565151511",bankAccount2);
 
         user1.setCoordinates(new Coordinates(100, 100));
         user2.setCoordinates(new Coordinates(1000, 1000));
@@ -80,15 +80,15 @@ public class Main {
         // caseDataSetup();
         //checkTimeGetPrice();
 
-        BankAccountData bankAccount1 = new BankAccountData("poopa loopa", "13372281313");
+        BankAccountData bankAccount1 = new BankAccountData("poopa loopa1", "13372281313");
         BankAccountData bankAccount2 = new BankAccountData("artjom pekuch", "000000000");
 
         BankAPI bankAPI = new BankAPI();
         bankAPI.addNewBankAccountData(bankAccount1, BigDecimal.valueOf(50));
         bankAPI.addNewBankAccountData(bankAccount2, BigDecimal.valueOf(100));
 
-        User user1 = new User("user1", "user1", 56512341);
-        User user2 = new User("user2", "user2", 565151511);
+        User user1 = new User("user1", "user1", "56512341",bankAccount1);
+        User user2 = new User("user2", "user2", "565151511",bankAccount2);
         user1.setBankAccount(bankAccount1);
         user2.setBankAccount(bankAccount2);
         user1.setCoordinates(new Coordinates(100, 100));
@@ -146,6 +146,10 @@ public class Main {
         //System.out.println(usersDAO.getUserById(0).getBankAccount());
     }
 
+
+
+
+
     private static void checkTimeGetPrice() {
 
         Date date1 = new Date(System.currentTimeMillis());
@@ -172,8 +176,8 @@ public class Main {
         bankAPI.addNewBankAccountData(bankAccount1, BigDecimal.valueOf(50));
         bankAPI.addNewBankAccountData(bankAccount2, BigDecimal.valueOf(100));
 
-        User user1 = new User("user1", "user1", 56512341);
-        User user2 = new User("user2", "user2", 565151511);
+        User user1 = new User("user1", "user1", "56512341",bankAccount1);
+        User user2 = new User("user2", "user2", "565151511",bankAccount2);
         user1.setBankAccount(bankAccount1);
         user2.setBankAccount(bankAccount2);
         user1.setCoordinates(new Coordinates(100, 100));
@@ -191,6 +195,7 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
         checkSystem();
+        long aaa = 1L;
 //        checkTimeGetPrice();
     }
 

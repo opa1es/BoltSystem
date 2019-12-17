@@ -16,7 +16,7 @@ public class User {
     private /*@ spec_public @*/ BankAccountData bankAccount;
     private /*@ spec_public nullable @*/ Coordinates coordinates;
 
-    
+
     //@ public invariant userFirstName != null;
     //@ public invariant userSecondName != null;
     //@ public invariant phoneNumber != null;
@@ -33,7 +33,7 @@ public class User {
       @ ensures this.phoneNumber == phoneNumber;
       @ ensures this.bankAccount == bankAccount;
       @*/
-    
+
     public User(String userFirstName,String userSecondName,String phoneNumber,BankAccountData bankAccount) {
         this.userFirstName = userFirstName;
         this.userSecondName = userSecondName;
@@ -68,7 +68,7 @@ public class User {
     public String getPhoneNumber() {
         return phoneNumber;
     }
-    
+
     //@ requires phoneNumber.length() > 0;
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
