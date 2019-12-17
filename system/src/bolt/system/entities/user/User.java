@@ -9,7 +9,6 @@ import bolt.system.entities.coordinates.Coordinates;
 
 public class User {
 
-
     private /*@ spec_public @*/ long userId;
     private /*@ spec_public @*/ String userFirstName;
     private /*@ spec_public @*/ String userSecondName;
@@ -17,16 +16,17 @@ public class User {
     private /*@ spec_public @*/ BankAccountData bankAccount;
     private /*@ spec_public nullable @*/ Coordinates coordinates;
 
-    //@ public invariant userId >= 0;
+    
     //@ public invariant userFirstName != null;
     //@ public invariant userSecondName != null;
     //@ public invariant phoneNumber != null;
-    //@ public invariant coordinates != null;
-
+    //@ public invariant bankAccount != null;
+    
+    
     /*@ public normal_behavior
       @ requires userFirstName.length() > 0;
       @ requires userSecondName.length() > 0;
-      @ requires phoneNumber != null;
+      @ requires phoneNumber.length() > 0;
       @ requires bankAccount != null;
       @ ensures this.userFirstName == userFirstName;
       @ ensures this.userSecondName == userSecondName;
@@ -34,26 +34,11 @@ public class User {
       @ ensures this.bankAccount == bankAccount;
       @*/
     
-    public User(String userFirstName, String userSecondName, String phoneNumber, BankAccountData bankAccount) {
+    public User(String userFirstName,String userSecondName,String phoneNumber,BankAccountData bankAccount) {
         this.userFirstName = userFirstName;
         this.userSecondName = userSecondName;
         this.phoneNumber = phoneNumber;
         this.bankAccount = bankAccount;
-    }
-
-    /*@ public normal_behavior
-      @ requires userFirstName.length() > 0;
-      @ requires userSecondName.length() > 0;
-      @ requires phoneNumber.length() > 0 ;
-      @ ensures this.userFirstName == userFirstName;
-      @ ensures this.userSecondName == userSecondName;
-      @ ensures this.phoneNumber == phoneNumber;
-      @*/
-    
-    public User(String userFirstName, String userSecondName, String phoneNumber) {
-        this.userFirstName = userFirstName;
-        this.userSecondName = userSecondName;
-        this.phoneNumber = phoneNumber;
     }
 
     public long getUserId() {
@@ -83,7 +68,8 @@ public class User {
     public String getPhoneNumber() {
         return phoneNumber;
     }
-
+    
+    //@ requires phoneNumber.length() > 0;
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
@@ -95,8 +81,7 @@ public class User {
     public void setBankAccount(BankAccountData bankAccount) {
         this.bankAccount = bankAccount;
     }
-
-    public Coordinates getCoordinates() {
+    public /*@ nullable @*/ Coordinates getCoordinates() {
         return coordinates;
     }
 
