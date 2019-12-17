@@ -20,13 +20,13 @@ public class User {
     //@ public invariant userId >= 0;
     //@ public invariant userFirstName != null;
     //@ public invariant userSecondName != null;
-    //@ public invariant phoneNumber >= 0;
+    //@ public invariant phoneNumber != null;
     //@ public invariant coordinates != null;
 
     /*@ public normal_behavior
       @ requires userFirstName.length() > 0;
       @ requires userSecondName.length() > 0;
-      @ requires phoneNumber >= 0;
+      @ requires phoneNumber != null;
       @ requires bankAccount != null;
       @ ensures this.userFirstName == userFirstName;
       @ ensures this.userSecondName == userSecondName;
@@ -44,7 +44,7 @@ public class User {
     /*@ public normal_behavior
       @ requires userFirstName.length() > 0;
       @ requires userSecondName.length() > 0;
-      @ requires phoneNumber > 0;
+      @ requires phoneNumber.length() > 0 ;
       @ ensures this.userFirstName == userFirstName;
       @ ensures this.userSecondName == userSecondName;
       @ ensures this.phoneNumber == phoneNumber;
