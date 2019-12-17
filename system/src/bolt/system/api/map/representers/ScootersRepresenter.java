@@ -8,11 +8,20 @@ import bolt.system.entities.scooter.Scooter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @invariants: scootersDAO
+ */
+
 public class ScootersRepresenter {
 
-    private ScootersDAO scootersDAO;
-    private MapAPI mapAPI;
-
+    private /*@ spec_public @*/ ScootersDAO scootersDAO;
+    private /*@ spec_public @*/ MapAPI mapAPI;
+    
+    /*@ public normal_behavior
+    @ requires scootersDAO != null;
+    @ ensures this.scootersDAO == scootersDAO;
+    @ ensures this.mapAPI == new MapAPI();
+    @*/
     public ScootersRepresenter(ScootersDAO scootersDAO) {
         this.scootersDAO = scootersDAO;
         this.mapAPI = new MapAPI();
@@ -21,7 +30,10 @@ public class ScootersRepresenter {
     public List<Long> getAvailableScootersForUser(Coordinates userCoordinates) {
         return mapAPI.getCloseScooters(userCoordinates, scootersDAO);
     }
-
+    
+    /*@ 
+      @ 
+      @*/
     public List<ScootersRepresentationObj> getAvailableScootersRepresentationData(Coordinates userCoordinates) {
         return scootersDAO.getAvailableScooters().stream().map(scooter ->
                 new ScootersRepresentationObj(scooter.getScooterId(), scooter.getChargeLevel(), scooter.getCoordinates()))
