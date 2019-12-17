@@ -4,33 +4,60 @@ import bolt.system.entities.coordinates.Coordinates;
 
 
 /**
- * invariants: userId, userFirstName, userSecondName, phoneNumber, bankAccount
+ * @invariants: userId, userFirstName, userSecondName, phoneNumber, bankAccount
  */
+
 public class User {
 
+    /*@ public static invariant
+      @ (\forall User u1, u2;
+      @     u1 != u2 ==> u1.userFirstName != u2.userFirstName);
+      @*/
 
-    private long userId;
-    private String userFirstName;
-    private String userSecondName;
-    private int phoneNumber;
-    private BankAccountData bankAccount;
-    public Coordinates coordinates;
+    private /*@ spec_public @*/ long userId;
+    private /*@ spec_public @*/ String userFirstName;
+    private /*@ spec_public @*/ String userSecondName;
+    private /*@ spec_public @*/ int phoneNumber;
+    private /*@ spec_public @*/ BankAccountData bankAccount;
+    private /*@ spec_public nullable @*/ Coordinates coordinates;
 
+    //@ public invariant userId >= 0;
+    //@ public invariant userFirstName != null;
+    //@ public invariant userSecondName != null;
+    //@ public invariant phoneNumber >= 0;
+    //@ public invariant coordinates != null;
 
-    public User(String userFirstName, String userSecondName, int phoneNumber, BankAccountData bankAccount) {
-//        this.userId = userId;
+    /*@ public normal_behavior
+      @ requires userFirstName.length() > 0;
+      @ requires userSecondName.length() > 0;
+      @ requires phoneNumber >= 0;
+      @ requires bankAccount != null;
+      @ ensures this.userFirstName == userFirstName;
+      @ ensures this.userSecondName == userSecondName;
+      @ ensures this.phoneNumber == phoneNumber;
+      @ ensures this.bankAccount == bankAccount;
+      @*/
+    
+    public User(/*@ non_null @*/ String userFirstName, /*@ non_null @*/ String userSecondName, int phoneNumber, BankAccountData bankAccount) {
         this.userFirstName = userFirstName;
         this.userSecondName = userSecondName;
         this.phoneNumber = phoneNumber;
         this.bankAccount = bankAccount;
     }
 
+    /*@ public normal_behavior
+      @ requires userFirstName.length() > 0;
+      @ requires userSecondName.length() > 0;
+      @ requires phoneNumber > 0;
+      @ ensures this.userFirstName == userFirstName;
+      @ ensures this.userSecondName == userSecondName;
+      @ ensures this.phoneNumber == phoneNumber;
+      @*/
+    
     public User(String userFirstName, String userSecondName, int phoneNumber) {
-//        this.userId = userId;
         this.userFirstName = userFirstName;
         this.userSecondName = userSecondName;
         this.phoneNumber = phoneNumber;
-//        this.bankAccount = bankAccount;
     }
 
     public long getUserId() {
