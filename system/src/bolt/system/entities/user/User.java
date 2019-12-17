@@ -17,7 +17,7 @@ public class User {
     private /*@ spec_public @*/ BankAccountData bankAccount;
     private /*@ spec_public nullable @*/ Coordinates coordinates;
 
-    //@ public invariant userId >= 0;
+    //@ public invariant userId >= 0L;
     //@ public invariant userFirstName != null;
     //@ public invariant userSecondName != null;
     //@ public invariant phoneNumber != null;
