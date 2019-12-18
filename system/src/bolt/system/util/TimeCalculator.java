@@ -14,6 +14,7 @@ public class TimeCalculator {
 	//@ requires datatime1.getTime() <= Long.MAX_VALUE;
 	//@ requires datatime2.getTime() <= Long.MAX_VALUE;
 	//@ signals_only \nothing;
+
 	public /*@ code_safe_math @*/ static double getDifferenceInMinutes(Date datatime1, Date datatime2) { 
         return BigDecimal.valueOf((double)  (datatime1.getTime() - datatime2.getTime())/ (1000 * 60)).setScale(3, RoundingMode.HALF_UP).doubleValue();
     }
