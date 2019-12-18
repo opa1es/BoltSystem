@@ -8,9 +8,12 @@ import java.util.List;
 
 public class SessionController {
 
-    private List<ScooterActiveSessionData> scooterActiveSessionDataStorage;
-    private long sessionIdGenerator = 0L;
+	
+    private /*@ spec_public @*/ List<ScooterActiveSessionData> scooterActiveSessionDataStorage;
+    private /*@ spec_public @*/ long sessionIdGenerator = 0L;
 
+    
+    //@ ensures this.scooterActiveSessionDataStorage.getClass() == ArrayList.class;
     public SessionController() {
         this.scooterActiveSessionDataStorage = new ArrayList<>();
 
@@ -19,16 +22,16 @@ public class SessionController {
     public SessionController(List<ScooterActiveSessionData> scooterActiveSessionDataStorage) {
         this.scooterActiveSessionDataStorage = scooterActiveSessionDataStorage;
     }
-
+    
+    
     public void addNewSession(ScooterActiveSessionData session) {
         if (!checkIfSessionIsActive(session)) {
             session.setSessionId(sessionIdGenerator++);
             scooterActiveSessionDataStorage.add(session);
         }
-
     }
 
-    //checks if user or scooter already exist in processes
+
     public boolean checkIfSessionIsActive(ScooterActiveSessionData session) {
         return scooterActiveSessionDataStorage.stream().anyMatch(activeSession -> activeSession.getUserId() == session.getUserId() || activeSession.getScooterId() == session.getScooterId());
     }
@@ -41,12 +44,10 @@ public class SessionController {
     public void closeSessionByScooterId(long scooterId) {
         ScooterActiveSessionData sessionToDelete = this.scooterActiveSessionDataStorage.stream().filter(session -> session.getScooterId() == scooterId).findFirst().orElse(null);
         scooterActiveSessionDataStorage.remove(sessionToDelete);
-
     }
 
     public ScooterActiveSessionData getSessionByUserId(long userId) {
         return this.scooterActiveSessionDataStorage.stream().filter(session -> session.getUserId() == userId).findFirst().orElse(null);
-
     }
 
     public ScooterActiveSessionData getSessionByScooterId(long scooterId) {
