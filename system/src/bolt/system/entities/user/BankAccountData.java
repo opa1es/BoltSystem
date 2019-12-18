@@ -4,15 +4,26 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
- * invariants: name, accountNumber
+ * @invariants: name, accountNumber
  */
 public class BankAccountData {
 
 
-    private String name;
-    private String accountNumber;
 
-    //TODO: JML: Check if input data length is ok
+    private  /*@ spec_public @*/ String name;
+    private  /*@ spec_public @*/ String accountNumber;
+    
+    //@ public invariant name != null ;
+    //@ public invariant accountNumber != null;
+
+    /*@ public normal_behavior 
+    @ requires name.length() > 0 &&  name.length() <= 100;
+    @ requires accountNumber.length() <=16 && accountNumber.length() >= 14;
+    @ requires name != null;
+    @ requires accountNumber != null;
+    @ ensures this.name == name;
+    @ ensures this.accountNumber == accountNumber;
+    @*/
     public BankAccountData(String name, String accountNumber) {
         this.name = name;
         this.accountNumber = accountNumber;
@@ -21,7 +32,7 @@ public class BankAccountData {
     public String getName() {
         return name;
     }
-
+    //@ requires name.length() > 0 &&  name.length() <= 50;
     public void setName(String name) {
         this.name = name;
     }
@@ -29,19 +40,22 @@ public class BankAccountData {
     public String getAccountNumber() {
         return accountNumber;
     }
-
+    //@ requires accountNumber.length() <=16 && accountNumber.length() >= 14;
     public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
     }
 
-    public BigDecimal wallet() {
-        return BigDecimal.valueOf(0);
-    }
-
-    @Override
-    public int hashCode() {
-        return 31 * name.hashCode() + accountNumber.hashCode();
-    }
+    
+//
+//    @Override
+//    public int hashCode() {
+//        final int prime = 31;
+//        int result = 1;
+//        result = prime * result + ((name == null) ? 0 : name.hashCode());
+//        result = prime * result + ((accountNumber == null) ? 0 : accountNumber.hashCode());
+//        return result;
+//        //        //return 31 * name.hashCode() + accountNumber.hashCode();
+//    }
 
     @Override
     public String toString() {

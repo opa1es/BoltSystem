@@ -30,8 +30,8 @@ public class Main {
     public static void caseDataSetup() {
         //USERS:
 
-        BankAccountData bankAccount1 = new BankAccountData("poopa loopa", "13372281313");
-        BankAccountData bankAccount2 = new BankAccountData("artjom pekush", "000000000");
+        BankAccountData bankAccount1 = new BankAccountData("poopa loopa", "1111111111111111");
+        BankAccountData bankAccount2 = new BankAccountData("artjom pekush", "22222222222222");
         // System.out.println(bankAccount1.hashCode());
         User user1 = new User("user1", "user1", "56512341",bankAccount1);
         User user2 = new User("user2", "user2", "565151511",bankAccount2);
@@ -80,8 +80,8 @@ public class Main {
         // caseDataSetup();
         //checkTimeGetPrice();
 
-        BankAccountData bankAccount1 = new BankAccountData("poopa loopa1", "13372281313");
-        BankAccountData bankAccount2 = new BankAccountData("artjom pekuch", "000000000");
+        BankAccountData bankAccount1 = new BankAccountData("poopa loopa1", "1111111111111111");
+        BankAccountData bankAccount2 = new BankAccountData("artjom pekuch", "2222222222222222");
 
         BankAPI bankAPI = new BankAPI();
         bankAPI.addNewBankAccountData(bankAccount1, BigDecimal.valueOf(50));
@@ -195,7 +195,6 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
         checkSystem();
-        long aaa = 1L;
 //        checkTimeGetPrice();
     }
 

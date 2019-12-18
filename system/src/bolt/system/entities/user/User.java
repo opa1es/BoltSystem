@@ -16,7 +16,6 @@ public class User {
     private /*@ spec_public @*/ BankAccountData bankAccount;
     private /*@ spec_public nullable @*/ Coordinates coordinates;
 
-
     //@ public invariant userFirstName != null;
     //@ public invariant userSecondName != null;
     //@ public invariant phoneNumber != null;
@@ -24,9 +23,9 @@ public class User {
     
     
     /*@ public normal_behavior
-      @ requires userFirstName.length() > 0;
-      @ requires userSecondName.length() > 0;
-      @ requires phoneNumber.length() > 0;
+      @ requires userFirstName.length() > 0 && userFirstName.length() <= 50;
+      @ requires userSecondName.length() > 0 && userSecondName.length() <= 50;
+      @ requires phoneNumber.length() > 6 && phoneNumber.length() <= 20 ; 
       @ requires bankAccount != null;
       @ ensures this.userFirstName == userFirstName;
       @ ensures this.userSecondName == userSecondName;
@@ -69,7 +68,8 @@ public class User {
         return phoneNumber;
     }
 
-    //@ requires phoneNumber.length() > 0;
+    //@ requires phoneNumber.length() > 6 && phoneNumber.length() <= 20 ; 
+    //@ ensures this.phoneNumber == phoneNumber;
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
@@ -78,6 +78,8 @@ public class User {
         return bankAccount;
     }
 
+    //@ requires bankAccount != null; 
+    //@ ensures this.bankAccount == bankAccount;
     public void setBankAccount(BankAccountData bankAccount) {
         this.bankAccount = bankAccount;
     }
