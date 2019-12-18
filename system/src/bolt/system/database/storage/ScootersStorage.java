@@ -18,11 +18,11 @@ public class ScootersStorage {
     private long scooterIdGenerator = 0L;
 
 
-    public ScootersStorage(List<Scooter> scootersStorage) {
+    public  /*@ pure @*/ ScootersStorage(List<Scooter> scootersStorage) {
         this.scootersStorage = scootersStorage;
     }
 
-    public ScootersStorage() {
+    public  /*@ pure @*/ ScootersStorage() {
         this.scootersStorage = new ArrayList<>();
 
     }
