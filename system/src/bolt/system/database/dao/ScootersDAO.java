@@ -26,26 +26,35 @@ public class ScootersDAO {
 
     /*@ public normal_behavior
      @ requires scooter != null;
-     @ ensures database.getAllScooters().size() == \old(database.getAllScooters().size()) + 1;
+     @ ensures database.getAllScooters().size() >= \old(database.getAllScooters().size());
      @*/
-    public void addNewScooter(Scooter scooter) {
+    public /*@ pure @*/ void addNewScooter(Scooter scooter) {
         this.database.addNewScooter(scooter);
     }
 
     /*@
      @ requires id >= 0L;
-     @ ensures database.getAllScooters().size() - 1 == \old(database.getAllScooters().size());
+     @ ensures database.getAllScooters().size() <= \old(database.getAllScooters().size());
      @*/
-    public void deleteScooter(long id) {
+    public /*@ pure @*/ void deleteScooter(long id) {
         this.database.deleteScooter(id);
  
     }
 
+    
 
     /*@
      @ requires id >= 0L;
      @ requires database.getScooterById(id) != null;
      @*/
+    /*+INFERRED@
+      @ public normal_behavior
+      @   requires id >= 0L; 
+      @   requires database.getScooterById(id) != null; 
+      @     ensures `exception == null; 
+      @     ensures `terminationPosition == 1329; 
+      @     
+      @*/
     public Scooter getScooterById(long id) {
         return this.database.getScooterById(id);
 
@@ -55,6 +64,14 @@ public class ScootersDAO {
      @ requires id >= 0L;
      @ requires database.getScooterById(id) != null;
      @*/
+    /*+INFERRED@
+      @ public normal_behavior
+      @   requires id >= 0L; 
+      @   requires database.getScooterById(id) != null; 
+      @     ensures `exception == null; 
+      @     ensures `terminationPosition == 1544; 
+      @     
+      @*/
     public ScooterStatus getScooterStatus(long id) {
         return this.database.getScooterById(id).getCurrentStatus();
     }
@@ -64,6 +81,12 @@ public class ScootersDAO {
      *
      * @return List of scooter objects
      */
+    /*+INFERRED@
+      @ public normal_behavior
+      @     ensures `exception == null; 
+      @     ensures `terminationPosition == 1779; 
+      @     
+      @*/
     public List<Scooter> getAllScooters() {
         return this.database.getAllScooters();
     }
