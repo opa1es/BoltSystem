@@ -50,7 +50,7 @@ public class ScootersStorage {
      * @param id - id of scooter to select
      * @return scooter object with id: id
      */
-    public Scooter getScooterById(long id) {
+    public /*@ pure @*/ Scooter getScooterById(long id) {
         return this.scootersStorage.stream().filter(scooter -> scooter.getScooterId() == id).findFirst().orElse(null);
 
     }
@@ -71,7 +71,7 @@ public class ScootersStorage {
      *
      * @return List of scooter objects
      */
-    public List<Scooter> getAllScooters() {
+    public /*@ pure @*/ List<Scooter> getAllScooters() {
         return this.scootersStorage;
     }
 
