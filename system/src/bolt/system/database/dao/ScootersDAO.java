@@ -16,32 +16,40 @@ public class ScootersDAO {
 
     private /*@ spec_public @*/ ScootersStorage database;
 
-    public ScootersDAO(Database database) {
+    /*@
+    @ requires database != null;
+    @ ensures this.database == database.getScootersStorage();
+    @*/
+    public ScootersDAO(Database database) { 
         this.database = database.getScootersStorage();
     }
-
+    
+    /*@ 
+    @ ensures this.database == new Database().getScootersStorage();
+    @*/
     public ScootersDAO() {
         this.database = new Database().getScootersStorage();
-    }
+    } 
 
-    /*@ public normal_behavior
+    /*@
      @ requires scooter != null;
-     @ ensures database.getAllScooters().size() >= \old(database.getAllScooters().size());
+     @ requires database != null;
+     @ ensures database.getAllScooters().size() == \old(database.getAllScooters().size()) + 1;
      @*/
     public /*@ pure @*/ void addNewScooter(Scooter scooter) {
         this.database.addNewScooter(scooter);
     }
 
-    /*@
+    /*@ 
+     @ requires database != null;
      @ requires id >= 0L;
-     @ ensures database.getAllScooters().size() <= \old(database.getAllScooters().size());
+     @ ensures database.getAllScooters().size() - 1 == \old(database.getAllScooters().size());
      @*/
     public /*@ pure @*/ void deleteScooter(long id) {
         this.database.deleteScooter(id);
  
     }
 
-    
 
     /*@
      @ requires id >= 0L;

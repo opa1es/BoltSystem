@@ -16,11 +16,11 @@ public class UserStorage {
     private /*@ spec_public @*/  List<User> usersStorage;
     private /*@ spec_public @*/  Long userIdGenerator = 0L;
 
-    public UserStorage(List<User> usersStorage) {
+    public  /*@ pure @*/ UserStorage(List<User> usersStorage) {
         this.usersStorage = usersStorage;
     }
 
-    public UserStorage() {
+    public  /*@ pure @*/ UserStorage() {
         usersStorage = new ArrayList<>();
     }
 
@@ -58,7 +58,7 @@ public class UserStorage {
      * @param id - id of user to select
      * @return user object with id: id
      */
-    public User getUserById(long id) {
+    public /*@ pure @*/ User getUserById(long id) {
         return this.usersStorage.stream().filter(user -> user.getUserId() == id).findFirst().orElse(null);
 
     }

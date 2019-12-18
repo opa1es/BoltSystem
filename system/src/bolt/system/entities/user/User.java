@@ -74,7 +74,7 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public BankAccountData getBankAccount() {
+    public /*@ pure @*/ BankAccountData getBankAccount() {
         return bankAccount;
     }
 
