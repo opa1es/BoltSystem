@@ -18,10 +18,10 @@ public class ScooterAccessController {
 
 
     private static final BigDecimal MAX_MONEY_FOR_RIDE = BigDecimal.valueOf(20);
-    private /*@ spec_public nullable @*/ ScootersDAO scootersDAO;
-    private /*@ spec_public nullable @*/ UsersDAO usersDAO;
-    private /*@ spec_public nullable @*/ SessionController sessionController;
-    private /*@ spec_public nullable @*/ BankAPI bankAPI;
+    private /*@ spec_public @*/ ScootersDAO scootersDAO;
+    private /*@ spec_public @*/ UsersDAO usersDAO;
+    private /*@ spec_public @*/ SessionController sessionController;
+    private /*@ spec_public @*/ BankAPI bankAPI;
 
     /*@ requires scootersDAO != null;
       @ requires usersDAO != null;
@@ -53,7 +53,7 @@ public class ScooterAccessController {
         ScooterActiveSessionData session = sessionController.getSessionByScooterId(requestedScooterId);
         BigDecimal moneyForRide;
         if (sessionController.checkIfSessionIsActive(session)) {
-            System.out.println(session.getStarted() + "  || " + new Date(System.currentTimeMillis()));
+           // System.out.println(session.getStarted() + "  || " + new Date(System.currentTimeMillis()));
             double timeDifferenceInMinutes = TimeCalculator.getDifferenceInMinutes(session.getStarted(), new Date(System.currentTimeMillis()));
 
             sessionController.closeSessionByScooterId(requestedScooterId);
@@ -83,10 +83,8 @@ public class ScooterAccessController {
 
         BankAccountData userBankAccount = usersDAO.getUserById(userId).getBankAccount();
         if (!bankAPI.checkIfAccountExists(userBankAccount)) {
-
             return false;
         }
-        //TODO: check correctness later, currently too lazy
         return bankAPI.makePayment(userBankAccount, moneyAmount);
     }
 

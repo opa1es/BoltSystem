@@ -4,14 +4,24 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
+
+/**
+ * @invariants: userId, userFirstName, userSecondName, phoneNumber, bankAccount
+ */
 public class ScooterActiveSessionData {
 
-    private long sessionId;
-    private long userId;
-    private long scooterId;
-    private Date started;
+    private /*@ spec_public @*/ long sessionId;
+    private /*@ spec_public @*/ long userId;
+    private /*@ spec_public @*/ long scooterId;
+    private /*@ spec_public @*/ Date started;
 
-
+    /*@ public normal_behavior
+    @ requires userId >= 0;
+    @ requires scooterId >= 0;
+    @ ensures this.userId == userId;
+    @ ensures this.started.getClass() == Date.class;
+    @ ensures this.scooterId == scooterId;
+    @*/
     public ScooterActiveSessionData(long userId, long scooterId) {
         this.userId = userId;
         this.scooterId = scooterId;
