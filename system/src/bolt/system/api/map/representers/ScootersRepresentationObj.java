@@ -6,11 +6,11 @@ public class ScootersRepresentationObj {
 
 	private /*@ spec_public @*/ long id;
     private /*@ spec_public @*/ short chargeLevel;
-    private /*@ spec_public nullable @*/ Coordinates coordinates;
+    private /*@ spec_public @*/ Coordinates coordinates;
 
-    /*@ requires 0 < id;
+    /*@ requires 0 <= id;
     @ requires coordinates != null;
-    @ requires 0 <= chargeLevel;
+    @ requires 0 <= chargeLevel && 100 >= chargeLevel;
     @ ensures this.id == id;
     @ ensures this.chargeLevel == chargeLevel;
     @ ensures this.coordinates == coordinates;
@@ -21,6 +21,7 @@ public class ScootersRepresentationObj {
         this.coordinates = coordinates;
     }
 
+    
     @Override
     public String toString() {
         return "ScootersRepresentationData{" +
