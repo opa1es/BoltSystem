@@ -9,12 +9,12 @@ import javax.xml.crypto.Data;
 import java.util.List;
 
 /**
- * invariants: database
+ * @invariants: database
  */
 public class ScootersDAO {
 
 
-    private ScootersStorage database;
+    private /*@ spec_public @*/ ScootersStorage database;
 
     public ScootersDAO(Database database) {
         this.database = database.getScootersStorage();
@@ -24,51 +24,38 @@ public class ScootersDAO {
         this.database = new Database().getScootersStorage();
     }
 
-    /**
-     * require - scooter not null; can make connection with DB
-     * <p>
-     * ensure - new scooter entity should be added to scooterStorage object storage;
-     * new storage.size = old storage.size + 1
-     *
-     * @param scooter - scooter to add
-     */
+    /*@ public normal_behavior
+     @ requires scooter != null;
+     @ ensures database.getAllScooters().size() == \old(database.getAllScooters().size()) + 1;
+     @*/
     public void addNewScooter(Scooter scooter) {
         this.database.addNewScooter(scooter);
     }
 
-    /**
-     * require - require in database database exists Scooter object with id equals param id
-     * ; can make connection with DB
-     *
-     * @param id - scooter id to delete
-     */
+    /*@
+     @ requires id >= 0L;
+     @ ensures database.getAllScooters().size() - 1 == \old(database.getAllScooters().size());
+     @*/
     public void deleteScooter(long id) {
         this.database.deleteScooter(id);
-
+ 
     }
 
 
-    /**
-     * require -  in database database exists Scooter object with id equals param id
-     * ; can make connection with DB
-     *
-     * @param id - id of scooter to select
-     * @return scooter object with id: id
-     */
+    /*@
+     @ requires id >= 0L;
+     @ requires database.getScooterById(id) != null;
+     @*/
     public Scooter getScooterById(long id) {
         return this.database.getScooterById(id);
 
     }
 
-    /**
-     * require - in database database exists scooter entity with id = id
-     *
-     * @param id - scooter to select
-     * @return return selected scooter status
-     */
+    /*@
+     @ requires id >= 0L;
+     @ requires database.getScooterById(id) != null;
+     @*/
     public ScooterStatus getScooterStatus(long id) {
-
-
         return this.database.getScooterById(id).getCurrentStatus();
     }
 

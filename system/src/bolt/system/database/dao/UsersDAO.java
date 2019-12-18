@@ -14,7 +14,7 @@ import java.util.List;
 public class UsersDAO {
 
 
-    private UserStorage database;
+    private /*@ spec_public @*/  UserStorage database;
 
     public UsersDAO(Database database) {
         this.database = database.getUserStorage();
@@ -23,26 +23,22 @@ public class UsersDAO {
     public UsersDAO() {
         this.database = new Database().getUserStorage();
 
-    }
+    } 
 
-    /**
-     * require - user not null; can make connection with DB
-     * <p>
-     * ensure - new user entity should be added to UserStorage object storage;
-     * new storage.size = old storage.size + 1
-     *
-     * @param user - user to add
-     */
+    /*@
+     @ requires user != null;
+     @ 
+     @ ensures database.getAllUsers().size() == \old(database.getAllUsers().size()) + 1;
+     @
+     @*/
     public void addNewUser(User user) {
         this.database.addNewUser(user);
     }
 
-    /**
-     * require - require in database database exists User object with id equals param id
-     * ; can make connection with DB
-     *
-     * @param id - user id to delete
-     */
+    /*@
+    @ requires id >= 0L;
+    @ ensures database.getAllUsers().size() - 1 == \old(database.getAllUsers().size());
+    @*/
     public void deleteUser(long id) {
         this.database.deleteUser(id);
 

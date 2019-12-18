@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 public class UserStorage {
 
 
-    private List<User> usersStorage;
-    private Long userIdGenerator = 0L;
+    private /*@ spec_public @*/  List<User> usersStorage;
+    private /*@ spec_public @*/  Long userIdGenerator = 0L;
 
     public UserStorage(List<User> usersStorage) {
         this.usersStorage = usersStorage;
@@ -68,7 +68,7 @@ public class UserStorage {
      *
      * @return List of User objects
      */
-    public List<User> getAllUsers() {
+    public /*@ pure @*/  List<User> getAllUsers() {
 
         return this.usersStorage;
     }
