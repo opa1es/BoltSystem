@@ -3,26 +3,41 @@ package bolt.system.entities.scooter;
 import bolt.system.entities.coordinates.Coordinates;
 
 /**
- * invariants: scooterId, chargeLevel, coordinates, current status
+ * @invariants: scooterId, chargeLevel, coordinates, currentStatus
  */
+
 public class Scooter {
 
-    private long scooterId;
-    private short chargeLevel;
-    private Coordinates coordinates;
-    private ScooterStatus currentStatus;
+    private /*@ spec_public @*/ long scooterId;
+    private /*@ spec_public @*/ short chargeLevel;
+    private /*@ spec_public @*/ Coordinates coordinates;
+    private /*@ spec_public @*/ ScooterStatus currentStatus;
 
 
+    //@ public invariant coordinates != null;
+    //@ public invariant currentStatus != null;
+    
+    /*@ public normal_behavior
+    @ requires chargeLevel >= 0 && chargeLevel <= 100;
+    @ requires coordinates != null ; 
+    @ requires currentStatus != null;
+    @ ensures this.chargeLevel == chargeLevel;
+    @ ensures this.coordinates == coordinates;
+    @ ensures this.currentStatus == currentStatus;
+    @*/
     public Scooter(short chargeLevel, Coordinates coordinates, ScooterStatus currentStatus) {
-//        this.scooterId = scooterId;
         this.chargeLevel = chargeLevel;
         this.coordinates = coordinates;
         this.currentStatus = currentStatus;
     }
-
+    
+    /*@
+    @ requires chargeLevel >= 0 && chargeLevel <= 100;
+    @ ensures this.chargeLevel == chargeLevel;
+    @ ensures \result == true || \result == false;
+    @*/
     public boolean checkIfScooterHaveEnoughCharge() {
         if (this.chargeLevel < 10) {
-            //  this.currentStatus = ScooterStatus.NO_FUEL;
             return false;
         }
         return true;
@@ -32,7 +47,9 @@ public class Scooter {
     public long getScooterId() {
         return scooterId;
     }
-
+    /*@ 
+    @ ensures this.scooterId == scooterId;
+    @*/
     public void setScooterId(long scooterId) {
         this.scooterId = scooterId;
     }
@@ -40,7 +57,12 @@ public class Scooter {
     public short getChargeLevel() {
         return chargeLevel;
     }
-
+    
+    /*@
+    @ assignable  this.chargeLevel;
+    @ requires chargeLevel >= 0 && chargeLevel <= 100;
+    @ ensures this.chargeLevel == chargeLevel;
+    @*/
     public void setChargeLevel(short chargeLevel) {
         this.chargeLevel = chargeLevel;
     }
@@ -48,7 +70,10 @@ public class Scooter {
     public Coordinates getCoordinates() {
         return coordinates;
     }
-
+    /*@
+    @ requires coordinates != null;
+    @ ensures this.coordinates == coordinates;
+    @*/
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
@@ -56,7 +81,10 @@ public class Scooter {
     public ScooterStatus getCurrentStatus() {
         return currentStatus;
     }
-
+    /*@
+    @ requires currentStatus != null;
+    @ ensures this.currentStatus == currentStatus;
+    @*/
     public void setCurrentStatus(ScooterStatus currentStatus) {
         this.currentStatus = currentStatus;
     }
