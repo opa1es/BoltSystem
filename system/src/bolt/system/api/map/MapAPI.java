@@ -13,6 +13,11 @@ public class MapAPI {
 
     private final double CLOSURE_VALUE = 400;
 
+    /*@
+    @ requires userCoordinates != null;
+    @ requires scootersDAO != null;
+    @ ensures \result != null;
+    @*/
     public List<Long> getCloseScooters(Coordinates userCoordinates, ScootersDAO scootersDAO) {
         return scootersDAO.getAvailableScooters().stream().filter(scooter ->
                 new Distance(scooter.getCoordinates(), userCoordinates).getDistanceBetweenPoints() <= CLOSURE_VALUE)
