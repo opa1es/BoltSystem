@@ -8,22 +8,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ * @ invariants: bankAccounts
+ */
 public class BankAPI {
 
-    private String requestUrl = "http://banksite.com";
-    private Map<BankAccountData, BigDecimal> bankAccounts;
+    private /*@ spec_public @*/ String requestUrl = "http://banksite.com";
+    private /*@ spec_public @*/ Map<BankAccountData, BigDecimal> bankAccounts;
+
+    //@ public invariant bankAccounts != null;
 
 
     public BankAPI() {
         bankAccounts = new HashMap<>();
     }
 
+    //@ requires newBankAccount != null;
+    //@ requires moneyAmount != null;
+    //@ requires moneyAmount.compareTo(new BigDecimal(0)) > 0;
     public void addNewBankAccountData(BankAccountData newBankAccount, BigDecimal moneyAmount) {
         if (!bankAccounts.containsKey(newBankAccount)) {
             bankAccounts.put(newBankAccount, moneyAmount);
         }
     }
 
+    //@ requires bankAccount != null;
+    //@ requires money != null;
     public boolean makePayment(BankAccountData bankAccount, BigDecimal money) {
         if (bankAccounts.containsKey(bankAccount)) {
             BigDecimal oldMoneyValue = bankAccounts.get(bankAccount);
@@ -35,7 +46,8 @@ public class BankAPI {
         return true;
     }
 
-
+    //@ requires bankAccount != null;
+    //@ requires bankAccounts != null;
     public boolean checkIfAccountExists(BankAccountData bankAccount) {
         return bankAccounts.containsKey(bankAccount);
     }
