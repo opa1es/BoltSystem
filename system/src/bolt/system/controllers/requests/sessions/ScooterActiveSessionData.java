@@ -36,24 +36,25 @@ public class ScooterActiveSessionData {
                 ", scooterId=" + scooterId +
                 '}';
     }
-
+    //@ ensures this.sessionId == \result;
     public long getSessionId() {
         return sessionId;
     }
 
-    public void setSessionId(long sessionId) {
-        this.sessionId = sessionId;
-    }
-
+    //@ ensures this.userId == \result;
     public long getUserId() {
         return userId;
     }
-
+    //@ ensures this.scooterId == \result;
     public long getScooterId() {
         return scooterId;
     }
-
+    //@ ensures this.started == \result;
     public Date getStarted() {
         return started;
+    }
+    //@ ensures this.sessionId == sessionId;
+    public void setSessionId(long sessionId) {
+        this.sessionId = sessionId;
     }
 }

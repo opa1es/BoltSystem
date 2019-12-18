@@ -12,16 +12,29 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * here user requests. Communication point with user <-> controller
+ * @invariants: scooterAccessController, usersDAO, scootersRepresenter
  */
 public class UserRequestController {
 
+	
+    private /*@ spec_public @*/ ScooterAccessController scooterAccessController;
+    private /*@ spec_public @*/ UsersDAO usersDAO;
+    private /*@ spec_public @*/ ScootersRepresenter scootersRepresenter;
 
-    private ScooterAccessController scooterAccessController;
-    private UsersDAO usersDAO;
-    private ScootersRepresenter scootersRepresenter;
-
-    public UserRequestController(ScooterAccessController scooterAccessController, UsersDAO usersDAO, ScootersRepresenter scootersRepresenter, BankAPI bankAPI) {
+    //@ public invariant scooterAccessController != null;
+    //@ public invariant usersDAO != null;
+    //@ public invariant scootersRepresenter != null;
+    
+    
+    /*@ public normal_behavior
+    @ requires scooterAccessController != null;
+    @ requires usersDAO != null;
+    @ requires scootersRepresenter != null;
+    @ ensures this.scooterAccessController == scooterAccessController;
+    @ ensures this.usersDAO == usersDAO;
+    @ ensures this.scootersRepresenter == scootersRepresenter;
+    @*/
+    public UserRequestController(ScooterAccessController scooterAccessController, UsersDAO usersDAO, ScootersRepresenter scootersRepresenter) {
         this.scooterAccessController = scooterAccessController;
         this.usersDAO = usersDAO;
         this.scootersRepresenter = scootersRepresenter;
