@@ -20,19 +20,23 @@ public class ScootersRepresenter {
     /*@ public normal_behavior
     @ requires scootersDAO != null;
     @ ensures this.scootersDAO == scootersDAO;
-    @ ensures this.mapAPI == new MapAPI();
+    @ ensures this.mapAPI.getClass() == MapAPI.class;
     @*/
     public ScootersRepresenter(ScootersDAO scootersDAO) {
         this.scootersDAO = scootersDAO;
+
         this.mapAPI = new MapAPI();
     }
 
+    /*@ 
+      @ requires userCoordinates != null;
+      @*/
     public List<Long> getAvailableScootersForUser(Coordinates userCoordinates) {
         return mapAPI.getCloseScooters(userCoordinates, scootersDAO);
     }
     
     /*@ 
-      @ 
+      @ requires userCoordinates != null;
       @*/
     public List<ScootersRepresentationObj> getAvailableScootersRepresentationData(Coordinates userCoordinates) {
         return scootersDAO.getAvailableScooters().stream().map(scooter ->
