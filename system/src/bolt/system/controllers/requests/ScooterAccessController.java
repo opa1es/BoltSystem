@@ -53,7 +53,7 @@ public class ScooterAccessController {
         ScooterActiveSessionData session = sessionController.getSessionByScooterId(requestedScooterId);
         BigDecimal moneyForRide;
         if (sessionController.checkIfSessionIsActive(session)) {
-            // System.out.println(session.getStarted() + "  || " + new Date(System.currentTimeMillis()));
+            System.out.println(session.getStarted() + "  || " + new Date(System.currentTimeMillis()));
             double timeDifferenceInMinutes = TimeCalculator.getDifferenceInMinutes(session.getStarted(), new Date(System.currentTimeMillis()));
 
             sessionController.closeSessionByScooterId(requestedScooterId);
@@ -78,7 +78,8 @@ public class ScooterAccessController {
         }
         return false;
     }
-
+    //@ requires moneyAmount != null;
+    //@ requires moneyAmount.compareTo(new BigDecimal(0)) > 0;
     public boolean tryMakePayment(long userId, BigDecimal moneyAmount) {
 
         BankAccountData userBankAccount = usersDAO.getUserById(userId).getBankAccount();
