@@ -4,6 +4,7 @@ import bolt.system.api.map.MapAPI;
 import bolt.system.database.dao.ScootersDAO;
 import bolt.system.entities.coordinates.Coordinates;
 import bolt.system.entities.scooter.Scooter;
+import bolt.system.util.Distance;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,7 +40,7 @@ public class ScootersRepresenter {
       @ requires userCoordinates != null;
       @*/
     public List<ScootersRepresentationObj> getAvailableScootersRepresentationData(Coordinates userCoordinates) {
-        return scootersDAO.getAvailableScooters().stream().map(scooter ->
+        return scootersDAO.getAvailableScooters().stream().filter(scooter -> new Distance(userCoordinates, scooter.getCoordinates()).getDistanceBetweenPoints() <= 400).map(scooter ->
                 new ScootersRepresentationObj(scooter.getScooterId(), scooter.getChargeLevel(), scooter.getCoordinates()))
                 .collect(Collectors.toList());
     }
