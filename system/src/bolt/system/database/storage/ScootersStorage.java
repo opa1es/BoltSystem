@@ -14,27 +14,29 @@ public class ScootersStorage {
 
 
     public static final short LOW_POWER_VALUE = 10;
-    private List<Scooter> scootersStorage;
-    private long scooterIdGenerator = 0L;
+    private /*@ spec_public @*/ List<Scooter> scootersStorage;
+    private /*@ spec_public @*/ long scooterIdGenerator = 0L;
 
-
-    public  /*@ pure @*/ ScootersStorage(List<Scooter> scootersStorage) {
+    /*@
+    @ requires scootersStorage != null;
+    @ ensures this.scootersStorage == scootersStorage;
+    @*/
+    public /*@ pure @*/ ScootersStorage(List<Scooter> scootersStorage) {
         this.scootersStorage = scootersStorage;
     }
-
-    public  /*@ pure @*/ ScootersStorage() {
+    
+    /*@
+    @ ensures this.scootersStorage == new ArrayList<Scooter>();
+    @*/
+    public /*@ pure @*/ ScootersStorage() {
         this.scootersStorage = new ArrayList<>();
 
     }
 
-    /**
-     * require - scooter not null; can make connection with DB
-     * <p>
-     * ensure - new scooter entity should be added to scooterStorage object storage;
-     * new storage.size = old storage.size + 1
-     *
-     * @param scooter - scooter to add
-     */
+    /*@
+    @ requires scooter != null;
+    @ ensures scootersStorage.size() == \old(scootersStorage.size()) + 1;
+    @*/
     public void addNewScooter(Scooter scooter) {
         if (!scootersStorage.contains(scooter)) {
             scooter.setScooterId(this.scooterIdGenerator++);
@@ -43,45 +45,31 @@ public class ScootersStorage {
 
     }
 
-    /**
-     * require -  in database scooterStorage exists Scooter object with id equals param id
-     * ; can make connection with DB
-     *
-     * @param id - id of scooter to select
-     * @return scooter object with id: id
-     */
+ 
+    /*@
+    @ requires id >= 0L;
+    @*/
     public /*@ pure @*/ Scooter getScooterById(long id) {
         return this.scootersStorage.stream().filter(scooter -> scooter.getScooterId() == id).findFirst().orElse(null);
 
     }
 
-    /**
-     * require - require in database scooterStorage exists Scooter object with id equals param id
-     * ; can make connection with DB
-     *
-     * @param id - scooter id t delete
-     */
+    /*@
+    @ requires id >= 0L;
+    @ ensures scootersStorage.size() == \old(scootersStorage.size()) - 1;
+    @*/
     public void deleteScooter(long id) {
         Scooter scooterToRemove = this.scootersStorage.stream().filter(scooter -> scooter.getScooterId() == id).findFirst().orElse(null);
         this.scootersStorage.remove(scooterToRemove);
     }
 
-    /**
-     * require - can make connection with DB
-     *
-     * @return List of scooter objects
-     */
+
     public /*@ pure @*/ List<Scooter> getAllScooters() {
         return this.scootersStorage;
     }
 
-    /**
-     * require - can make connection with DB
-     *
-     * @return List of scooter objects
-     */
-    public List<Scooter> getAvailableScooters() {
 
+    public List<Scooter> getAvailableScooters() {
         return this.scootersStorage.stream().filter(scooter -> scooter.getChargeLevel() > LOW_POWER_VALUE && scooter.getCurrentStatus() == ScooterStatus.FREE).collect(Collectors.toList());
     }
 
