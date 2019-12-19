@@ -4,7 +4,7 @@ import bolt.system.entities.coordinates.Coordinates;
 
 public class ScootersRepresentationObj {
 
-	private /*@ spec_public @*/ long id;
+    private /*@ spec_public @*/ long id;
     private /*@ spec_public @*/ short chargeLevel;
     private /*@ spec_public @*/ Coordinates coordinates;
 
@@ -21,7 +21,7 @@ public class ScootersRepresentationObj {
         this.coordinates = coordinates;
     }
 
-    
+
     @Override
     public String toString() {
         return "ScootersRepresentationData{" +

@@ -53,7 +53,7 @@ public class ScooterAccessController {
         ScooterActiveSessionData session = sessionController.getSessionByScooterId(requestedScooterId);
         BigDecimal moneyForRide;
         if (sessionController.checkIfSessionIsActive(session)) {
-           // System.out.println(session.getStarted() + "  || " + new Date(System.currentTimeMillis()));
+            // System.out.println(session.getStarted() + "  || " + new Date(System.currentTimeMillis()));
             double timeDifferenceInMinutes = TimeCalculator.getDifferenceInMinutes(session.getStarted(), new Date(System.currentTimeMillis()));
 
             sessionController.closeSessionByScooterId(requestedScooterId);
@@ -88,10 +88,12 @@ public class ScooterAccessController {
         return bankAPI.makePayment(userBankAccount, moneyAmount);
     }
 
+    //@ ensures this.scootersDAO == \result;
     public ScootersDAO getScootersDAO() {
         return scootersDAO;
     }
 
+    //@ ensures this.sessionController == \result;
     public SessionController getSessionController() {
         return sessionController;
     }

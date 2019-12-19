@@ -20,8 +20,8 @@ public class User {
     //@ public invariant userSecondName != null;
     //@ public invariant phoneNumber != null;
     //@ public invariant bankAccount != null;
-    
-    
+
+
     /*@ public normal_behavior
       @ requires userFirstName.length() > 0 && userFirstName.length() <= 50;
       @ requires userSecondName.length() > 0 && userSecondName.length() <= 50;
@@ -32,61 +32,81 @@ public class User {
       @ ensures this.phoneNumber == phoneNumber;
       @ ensures this.bankAccount == bankAccount;
       @*/
-
-    public User(String userFirstName,String userSecondName,String phoneNumber,BankAccountData bankAccount) {
+    public User(String userFirstName, String userSecondName, String phoneNumber, BankAccountData bankAccount) {
         this.userFirstName = userFirstName;
         this.userSecondName = userSecondName;
         this.phoneNumber = phoneNumber;
         this.bankAccount = bankAccount;
     }
 
+    //@ ensures this.userId == \result;
     public long getUserId() {
         return userId;
     }
 
+    //@ assignable this.userId;
+    //@ ensures this.userId == userId;
     public void setUserId(long userId) {
         this.userId = userId;
     }
 
+    //@ ensures this.userFirstName == \result;
     public String getUserFirstName() {
         return userFirstName;
     }
 
+    //@ assignable this.userFirstName;
+    //@ requires userFirstName.length() > 0 && userFirstName.length() <= 50;
+    //@ ensures this.userFirstName == userFirstName;
     public void setUserFirstName(String userFirstName) {
         this.userFirstName = userFirstName;
     }
 
+    //@ ensures this.userSecondName == \result;
     public String getUserSecondName() {
         return userSecondName;
     }
 
+    //@ assignable this.userSecondName;
+    //@ requires userSecondName.length() > 0 && userSecondName.length() <= 50;
+    //@ ensures this.userSecondName == userSecondName;
     public void setUserSecondName(String userSecondName) {
         this.userSecondName = userSecondName;
     }
 
+    //@ ensures this.phoneNumber == \result;
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
+    //@ assignable this.phoneNumber;
     //@ requires phoneNumber.length() > 6 && phoneNumber.length() <= 20 ; 
     //@ ensures this.phoneNumber == phoneNumber;
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
+    //@ ensures this.bankAccount == \result;
     public /*@ pure @*/ BankAccountData getBankAccount() {
         return bankAccount;
     }
 
+    //@ assignable this.bankAccount;
     //@ requires bankAccount != null; 
     //@ ensures this.bankAccount == bankAccount;
     public void setBankAccount(BankAccountData bankAccount) {
         this.bankAccount = bankAccount;
     }
+
+
+    //@ ensures this.coordinates == \result;
     public /*@ nullable @*/ Coordinates getCoordinates() {
         return coordinates;
     }
 
+    //@ assignable this.coordinates;
+    //@ requires coordinates != null; 
+    //@ ensures this.coordinates == coordinates;
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }

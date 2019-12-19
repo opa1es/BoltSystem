@@ -6,9 +6,9 @@ package bolt.system.controllers.requests;
 
 public class ScooterRequestController {
 
-	 /*@ spec_public @*/ ScooterAccessController scooterAccessController;
+    /*@ spec_public @*/ ScooterAccessController scooterAccessController;
 
-	//@ requires scooterAccessController != null;
+    //@ requires scooterAccessController != null;
     public ScooterRequestController(ScooterAccessController scooterAccessController) {
         this.scooterAccessController = scooterAccessController;
     }

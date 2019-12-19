@@ -16,7 +16,7 @@ public class ScootersRepresenter {
 
     private /*@ spec_public @*/ ScootersDAO scootersDAO;
     private /*@ spec_public @*/ MapAPI mapAPI;
-    
+
     /*@ public normal_behavior
     @ requires scootersDAO != null;
     @ ensures this.scootersDAO == scootersDAO;
@@ -34,7 +34,7 @@ public class ScootersRepresenter {
     public List<Long> getAvailableScootersForUser(Coordinates userCoordinates) {
         return mapAPI.getCloseScooters(userCoordinates, scootersDAO);
     }
-    
+
     /*@ 
       @ requires userCoordinates != null;
       @*/

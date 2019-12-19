@@ -8,11 +8,11 @@ import java.util.List;
 
 public class SessionController {
 
-	
+
     private /*@ spec_public @*/ List<ScooterActiveSessionData> scooterActiveSessionDataStorage;
     private /*@ spec_public @*/ long sessionIdGenerator = 0L;
 
-    
+
     //@ ensures this.scooterActiveSessionDataStorage.getClass() == ArrayList.class;
     public SessionController() {
         this.scooterActiveSessionDataStorage = new ArrayList<>();
@@ -22,8 +22,8 @@ public class SessionController {
     public SessionController(List<ScooterActiveSessionData> scooterActiveSessionDataStorage) {
         this.scooterActiveSessionDataStorage = scooterActiveSessionDataStorage;
     }
-    
-    
+
+
     public void addNewSession(ScooterActiveSessionData session) {
         if (!checkIfSessionIsActive(session)) {
             session.setSessionId(sessionIdGenerator++);

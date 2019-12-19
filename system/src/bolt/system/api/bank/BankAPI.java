@@ -52,7 +52,7 @@ public class BankAPI {
         return bankAccounts.containsKey(bankAccount);
     }
 
-
+    //@ ensures \result == this.bankAccounts;
     public Map<BankAccountData, BigDecimal> getBankAccounts() {
         return bankAccounts;
     }

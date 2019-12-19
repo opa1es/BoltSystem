@@ -16,7 +16,7 @@ public class Scooter {
 
     //@ public invariant coordinates != null;
     //@ public invariant currentStatus != null;
-    
+
     /*@ public normal_behavior
     @ requires chargeLevel >= 0 && chargeLevel <= 100;
     @ requires coordinates != null ; 
@@ -30,7 +30,7 @@ public class Scooter {
         this.coordinates = coordinates;
         this.currentStatus = currentStatus;
     }
-    
+
     /*@
     @ requires chargeLevel >= 0 && chargeLevel <= 100;
     @ ensures this.chargeLevel == chargeLevel;
@@ -44,20 +44,25 @@ public class Scooter {
 
     }
 
+    //@ ensures \result == scooterId;
     public long getScooterId() {
         return scooterId;
     }
-    /*@ 
+
+    /*@
+    @ assignable this.scooterId;
     @ ensures this.scooterId == scooterId;
     @*/
     public void setScooterId(long scooterId) {
         this.scooterId = scooterId;
     }
 
+
+    //@ ensures \result == chargeLevel;
     public short getChargeLevel() {
         return chargeLevel;
     }
-    
+
     /*@
     @ assignable  this.chargeLevel;
     @ requires chargeLevel >= 0 && chargeLevel <= 100;
@@ -67,10 +72,17 @@ public class Scooter {
         this.chargeLevel = chargeLevel;
     }
 
+    /*@
+    @ requires coordinates != null;
+    @ ensures this.coordinates == coordinates;
+    @ ensures \result == this.coordinates;
+    @*/
     public Coordinates getCoordinates() {
         return coordinates;
     }
+
     /*@
+    @ assignable this.coordinates;
     @ requires coordinates != null;
     @ ensures this.coordinates == coordinates;
     @*/
@@ -78,10 +90,15 @@ public class Scooter {
         this.coordinates = coordinates;
     }
 
+    /*@
+    @ ensures \result == this.currentStatus;
+    @*/
     public ScooterStatus getCurrentStatus() {
         return currentStatus;
     }
+
     /*@
+	@ assignable this.currentStatus;
     @ requires currentStatus != null;
     @ ensures this.currentStatus == currentStatus;
     @*/

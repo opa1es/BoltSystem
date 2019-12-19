@@ -7,8 +7,8 @@ package bolt.system.entities.coordinates;
 
 public class Coordinates {
 
-    private double x;
-    private double y;
+    private /*@ spec_public @*/ double x;
+    private /*@ spec_public @*/ double y;
 
     /*@ public normal_behavior
     @ ensures x == x;
@@ -19,18 +19,24 @@ public class Coordinates {
         this.y = y;
     }
 
+    //@ ensures this.x == \result;
     public double getX() {
         return x;
     }
-    //@ ensures x == x;
+
+    //@ assignable this.x;
+    //@ ensures this.x == x;
     public void setX(double x) {
         this.x = x;
     }
 
+    //@ ensures this.y == \result;
     public double getY() {
         return y;
     }
-    // @ ensures y == y;
+
+    //@ assignable this.y;
+    //@ ensures this.y ==y;
     public void setY(double y) {
         this.y = y;
     }

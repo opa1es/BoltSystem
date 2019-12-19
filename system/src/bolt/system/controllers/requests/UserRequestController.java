@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class UserRequestController {
 
-	
+
     private /*@ spec_public @*/ ScooterAccessController scooterAccessController;
     private /*@ spec_public @*/ UsersDAO usersDAO;
     private /*@ spec_public @*/ ScootersRepresenter scootersRepresenter;
@@ -24,8 +24,8 @@ public class UserRequestController {
     //@ public invariant scooterAccessController != null;
     //@ public invariant usersDAO != null;
     //@ public invariant scootersRepresenter != null;
-    
-    
+
+
     /*@ public normal_behavior
     @ requires scooterAccessController != null;
     @ requires usersDAO != null;

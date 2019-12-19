@@ -28,14 +28,7 @@ public class ScooterActiveSessionData {
         this.started = new Date(System.currentTimeMillis());
     }
 
-    @Override
-    public String toString() {
-        return "ScooterActiveSessionData{" +
-                "sessionId=" + sessionId +
-                ", userId=" + userId +
-                ", scooterId=" + scooterId +
-                '}';
-    }
+
     //@ ensures this.sessionId == \result;
     public long getSessionId() {
         return sessionId;
@@ -45,16 +38,29 @@ public class ScooterActiveSessionData {
     public long getUserId() {
         return userId;
     }
+
     //@ ensures this.scooterId == \result;
     public long getScooterId() {
         return scooterId;
     }
+
     //@ ensures this.started == \result;
     public Date getStarted() {
         return started;
     }
+
+    //@ assignable this.sessionId;
     //@ ensures this.sessionId == sessionId;
     public void setSessionId(long sessionId) {
         this.sessionId = sessionId;
+    }
+
+    @Override
+    public String toString() {
+        return "ScooterActiveSessionData{" +
+                "sessionId=" + sessionId +
+                ", userId=" + userId +
+                ", scooterId=" + scooterId +
+                '}';
     }
 }

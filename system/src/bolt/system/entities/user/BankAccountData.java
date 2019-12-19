@@ -9,10 +9,9 @@ import java.util.Objects;
 public class BankAccountData {
 
 
-
     private  /*@ spec_public @*/ String name;
     private  /*@ spec_public @*/ String accountNumber;
-    
+
     //@ public invariant name != null ;
     //@ public invariant accountNumber != null;
 
@@ -29,33 +28,31 @@ public class BankAccountData {
         this.accountNumber = accountNumber;
     }
 
+    //@ ensures this.name == \result;
     public String getName() {
         return name;
     }
+
+    //@ assignable this.name;
     //@ requires name.length() > 0 &&  name.length() <= 50;
+    //@ ensures this.name == name;
     public void setName(String name) {
         this.name = name;
     }
 
+    //@ requires accountNumber.length() <=16 && accountNumber.length() >= 14;
+    //@ ensures this.accountNumber == \result;
     public String getAccountNumber() {
         return accountNumber;
     }
+
+    //@ assignable this.accountNumber;
     //@ requires accountNumber.length() <=16 && accountNumber.length() >= 14;
+    //@ ensures this.accountNumber == accountNumber;
     public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
     }
 
-    
-//
-//    @Override
-//    public int hashCode() {
-//        final int prime = 31;
-//        int result = 1;
-//        result = prime * result + ((name == null) ? 0 : name.hashCode());
-//        result = prime * result + ((accountNumber == null) ? 0 : accountNumber.hashCode());
-//        return result;
-//        //        //return 31 * name.hashCode() + accountNumber.hashCode();
-//    }
 
     @Override
     public String toString() {
