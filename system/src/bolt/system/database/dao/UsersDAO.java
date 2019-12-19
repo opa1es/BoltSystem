@@ -9,7 +9,7 @@ import bolt.system.entities.user.User;
 import java.util.List;
 
 /**
- * invariants: userStorage
+ * @invariants: userStorage
  */
 public class UsersDAO {
 
@@ -55,13 +55,6 @@ public class UsersDAO {
     }
 
 
-    /**
-     * require -  in database database exists User object with id equals param id
-     * ; can make connection with DB
-     *
-     * @param id - id of user to select
-     * @return user object with id: id
-     */
     /*@
      @ requires id >= 0L;
      @ ensures this.database.getUserById(id) != null;
@@ -71,11 +64,7 @@ public class UsersDAO {
 
     }
 
-    /**
-     * require - can make connection with DB
-     *
-     * @return List of User objects
-     */
+
     /*@
     @ ensures this.database.getAllUsers() != null;
     @*/
@@ -83,10 +72,6 @@ public class UsersDAO {
         return this.database.getAllUsers();
     } 
 
-    /**
-     * @param userId          - user id in system
-     * @param bankAccountData - new bank account
-     */
 
 //    public boolean checkIfUserExists(U)
     /*@

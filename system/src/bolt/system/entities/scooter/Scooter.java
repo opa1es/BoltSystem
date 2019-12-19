@@ -31,10 +31,14 @@ public class Scooter {
         this.currentStatus = currentStatus;
     }
 
-    /*@
-    @ requires chargeLevel >= 0 && chargeLevel <= 100;
-    @ ensures this.chargeLevel == chargeLevel;
-    @ ensures \result == true || \result == false;
+    /*@ public normal_behavior
+    @ {|
+    @ 	requires chargeLevel >= 0; 
+    @ 	ensures this.chargeLevel == chargeLevel;
+    @ 	ensures \result == true || \result == false;
+    @ also
+    @  	requires chargeLevel <= 100;
+    @ |}
     @*/
     public boolean checkIfScooterHaveEnoughCharge() {
         if (this.chargeLevel < 10) {
@@ -64,9 +68,11 @@ public class Scooter {
     }
 
     /*@
-    @ assignable  this.chargeLevel;
-    @ requires chargeLevel >= 0 && chargeLevel <= 100;
-    @ ensures this.chargeLevel == chargeLevel;
+    @ 	assignable  this.chargeLevel;
+    @ 	requires chargeLevel >= 0;
+    @ 	ensures this.chargeLevel == chargeLevel;
+    @ also 
+    @ 	requires chargeLevel <= 100; 
     @*/
     public void setChargeLevel(short chargeLevel) {
         this.chargeLevel = chargeLevel;

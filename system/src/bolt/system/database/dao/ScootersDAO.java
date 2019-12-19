@@ -84,11 +84,6 @@ public class ScootersDAO {
         return this.database.getScooterById(id).getCurrentStatus();
     }
 
-    /**
-     * require - can make connection with DB
-     *
-     * @return List of scooter objects
-     */
     /*+INFERRED@
       @ public normal_behavior
       @     ensures `exception == null; 
@@ -99,11 +94,6 @@ public class ScootersDAO {
         return this.database.getAllScooters();
     }
 
-    /**
-     * require - can make connection with DB
-     *
-     * @return List of scooter objects
-     */
     public List<Scooter> getAvailableScooters() {
 
         return this.database.getAvailableScooters();
