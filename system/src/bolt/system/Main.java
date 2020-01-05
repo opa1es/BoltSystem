@@ -80,7 +80,7 @@ public class Main {
         // caseDataSetup();
         //checkTimeGetPrice();
 
-        BankAccountData bankAccount1 = new BankAccountData("poopa loopa1", "1111111111111111");
+        BankAccountData bankAccount1 = new BankAccountData("name name", "1111111111111111");
         BankAccountData bankAccount2 = new BankAccountData("artjom pekuch", "2222222222222222");
 
         BankAPI bankAPI = new BankAPI();
@@ -121,7 +121,7 @@ public class Main {
         SessionController sessionController = new SessionController();
         ScooterAccessController scooterAccessController = new ScooterAccessController(scootersDAO, usersDAO, sessionController,bankAPI);
         ScootersRepresenter scootersRepresenter = new ScootersRepresenter(scootersDAO);
-        UserRequestController userRequestController = new UserRequestController(scooterAccessController, usersDAO, scootersRepresenter, bankAPI);
+        UserRequestController userRequestController = new UserRequestController(scooterAccessController, usersDAO, scootersRepresenter);
         ScooterRequestController scooterRequestController = new ScooterRequestController(scooterAccessController);
         //---------------------------------------------------RUN--------------------------------------------------
         long userId = 0;
@@ -135,7 +135,7 @@ public class Main {
         // WORKS.
         //        scooterRequestController.abortRide(requesterScooterId);
         try {
-            Thread.sleep(200);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
