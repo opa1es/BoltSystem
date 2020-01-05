@@ -3,6 +3,7 @@ package bolt.system.api.bank;
 import bolt.system.entities.user.BankAccountData;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +39,7 @@ public class BankAPI {
     public boolean makePayment(BankAccountData bankAccount, BigDecimal money) {
         if (bankAccounts.containsKey(bankAccount)) {
             BigDecimal oldMoneyValue = bankAccounts.get(bankAccount);
-            bankAccounts.replace(bankAccount, oldMoneyValue.subtract(money));
+            bankAccounts.replace(bankAccount, oldMoneyValue.subtract(new BigDecimal(-money.doubleValue())).setScale(3, RoundingMode.HALF_UP));
 //            System.out.println("payment was made!");
         } else {
             return false;
