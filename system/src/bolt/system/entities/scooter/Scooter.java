@@ -32,9 +32,10 @@ public class Scooter {
     }
 
     /*@
-    @ requires chargeLevel >= 0 && chargeLevel <= 100;
+    @ requires chargeLevel >= 0;
     @ ensures this.chargeLevel == chargeLevel;
-    @ ensures \result == true || \result == false;
+    @ also
+    @ requires chargeLevel <= 100;
     @*/
     public boolean checkIfScooterHaveEnoughCharge() {
         if (this.chargeLevel < 10) {
