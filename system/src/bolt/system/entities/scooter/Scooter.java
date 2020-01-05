@@ -33,7 +33,6 @@ public class Scooter {
 
     /*@
     @ requires chargeLevel >= 0;
-    @ ensures this.chargeLevel == chargeLevel;
     @ also
     @ requires chargeLevel <= 100;
     @*/
