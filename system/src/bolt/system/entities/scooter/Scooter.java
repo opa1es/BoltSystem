@@ -43,6 +43,7 @@ public class Scooter {
         }
         return true;
 
+
     }
 
     //@ ensures \result == scooterId;
