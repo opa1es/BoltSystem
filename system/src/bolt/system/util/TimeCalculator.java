@@ -13,6 +13,6 @@ public class TimeCalculator {
 	//@ ensures \result >= 0;
  
 	public static double getDifferenceInMinutes(Date datatime1, Date datatime2) { 
-        return BigDecimal.valueOf((double)  (datatime1.getTime() - datatime2.getTime())/ (1000 * 60)).setScale(3, RoundingMode.HALF_UP).doubleValue();
+        return BigDecimal.valueOf((double)  Math.abs(datatime1.getTime() - datatime2.getTime())/ (1000 * 60)).setScale(3, RoundingMode.HALF_UP).doubleValue();
     }
 }

@@ -13,9 +13,9 @@ import java.util.stream.Collectors;
 public class UserStorage {
 
 
-    private /*@ spec_public @*/  List<User> usersStorage;
-    private /*@ spec_public @*/  Long userIdGenerator = 0L;
-    
+    private /*@ spec_public @*/ List<User> usersStorage;
+    private /*@ spec_public @*/ Long userIdGenerator = 0L;
+
     /*@
     @ requires usersStorage != null;
     @ ensures this.usersStorage == usersStorage;
@@ -23,7 +23,7 @@ public class UserStorage {
     public  /*@ pure @*/ UserStorage(List<User> usersStorage) {
         this.usersStorage = usersStorage;
     }
-    
+
     /*@
     @ ensures usersStorage == new ArrayList<User>();
     @*/
@@ -93,7 +93,7 @@ public class UserStorage {
         return this.usersStorage;
     }
 
-    /** 
+    /**
      * @param userId             - user id in system
      * @param newBankAccountData - new bank account
      */

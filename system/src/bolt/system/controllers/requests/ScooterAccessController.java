@@ -78,6 +78,7 @@ public class ScooterAccessController {
         }
         return false;
     }
+
     //@ requires moneyAmount != null;
     //@ requires moneyAmount.compareTo(new BigDecimal(0)) > 0;
     public boolean tryMakePayment(long userId, BigDecimal moneyAmount) {
@@ -92,6 +93,11 @@ public class ScooterAccessController {
     //@ ensures this.scootersDAO == \result;
     public ScootersDAO getScootersDAO() {
         return scootersDAO;
+    }
+
+    //@ ensures this.usersDAO== \result;
+    public UsersDAO getUsersDAO() {
+        return usersDAO;
     }
 
     //@ ensures this.sessionController == \result;

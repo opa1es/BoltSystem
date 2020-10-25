@@ -24,7 +24,7 @@ public class ScootersStorage {
     public /*@ pure @*/ ScootersStorage(List<Scooter> scootersStorage) {
         this.scootersStorage = scootersStorage;
     }
-    
+
     /*@
     @ ensures this.scootersStorage == new ArrayList<Scooter>();
     @*/
@@ -45,7 +45,7 @@ public class ScootersStorage {
 
     }
 
- 
+
     /*@
     @ requires id >= 0L;
     @*/
