@@ -87,7 +87,7 @@ public class ScooterAccessController {
         if (!bankAPI.checkIfAccountExists(userBankAccount)) {
             return false;
         }
-        return bankAPI.makePayment(userBankAccount, moneyAmount);
+        return bankAPI.makePayment(userBankAccount, moneyAmount.negate());
     }
 
     //@ ensures this.scootersDAO == \result;
