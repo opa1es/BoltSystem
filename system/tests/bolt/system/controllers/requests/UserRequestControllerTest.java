@@ -1,6 +1,7 @@
 package bolt.system.controllers.requests;
 
 import bolt.system.api.bank.BankAPI;
+import bolt.system.api.map.representers.ScootersRepresenter;
 import bolt.system.controllers.requests.sessions.SessionController;
 import bolt.system.database.dao.ScootersDAO;
 import bolt.system.database.dao.UsersDAO;
@@ -19,16 +20,13 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ScooterAccessControllerTest {
+class UserRequestControllerTest {
 
 
-    static ScooterAccessController scooterAccessController;
-    static BankAPI bankAPI;
-
+    static UserRequestController userRequestController;
 
     @BeforeEach
     void refreshStorage() {
-
         ScooterStatus activeStatus = ScooterStatus.FREE;
         ScooterStatus brokenStatus = ScooterStatus.BROKEN;
 
@@ -44,7 +42,7 @@ class ScooterAccessControllerTest {
         user2.setCoordinates(new Coordinates(1000, 1000));
 
 
-        bankAPI = new BankAPI();
+        BankAPI bankAPI = new BankAPI();
         bankAPI.addNewBankAccountData(bankAccount1, BigDecimal.valueOf(50));
         bankAPI.addNewBankAccountData(bankAccount2, BigDecimal.valueOf(100));
 
@@ -69,16 +67,18 @@ class ScooterAccessControllerTest {
 
         SessionController sessionController = new SessionController();
 
-        scooterAccessController = new ScooterAccessController(scootersDAO, usersDAO, sessionController, bankAPI);
-
+        ScooterAccessController scooterAccessController = new ScooterAccessController(scootersDAO, usersDAO, sessionController, bankAPI);
+        ScootersRepresenter scootersRepresenter = new ScootersRepresenter(scootersDAO);
+        userRequestController = new UserRequestController(scooterAccessController, usersDAO, scootersRepresenter);
 
     }
 
-    @Test
-    void tryToGetScooter() {
 
-        boolean check_1 = scooterAccessController.tryToGetScooter(1, 1);
-        boolean check_2 = scooterAccessController.tryToGetScooter(1, 1);
+    @Test
+    void tryRentScooter() {
+
+        boolean check_1 = userRequestController.tryRentScooter(1, 1);
+        boolean check_2 = userRequestController.tryRentScooter(1, 1);
 
         if (!check_1) {
             fail();
@@ -90,82 +90,22 @@ class ScooterAccessControllerTest {
     }
 
     @Test
-    void closeScooterSessionAndMakePayment1() {
-        scooterAccessController.tryToGetScooter(1, 1);
+    void tryStopScooterRenting() {
+        userRequestController.tryRentScooter(1, 1);
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        if (!scooterAccessController.closeScooterSessionAndMakePayment(1)) {
+        if (!userRequestController.tryStopScooterRenting(1)) {
             fail();
         }
 
-        if (scooterAccessController.closeScooterSessionAndMakePayment(1)) {
-            fail();
-        }
-
-    }
-
-    @Test
-    void closeScooterSessionAndMakePayment2() {
-
-
-        scooterAccessController.tryToGetScooter(1, 1);
-        try {
-            Thread.sleep(8000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        BigDecimal oldValue = bankAPI.getBankAccounts().get(scooterAccessController.getUsersDAO().getUserById(1).getBankAccount());
-
-
-        if (!scooterAccessController.closeScooterSessionAndMakePayment(1)) {
-            fail();
-        }
-
-        BigDecimal newValue = bankAPI.getBankAccounts().get(scooterAccessController.getUsersDAO().getUserById(1).getBankAccount());
-        BigDecimal trueValue = oldValue.subtract(BigDecimal.valueOf(0.01)).setScale(3, BigDecimal.ROUND_HALF_UP);
-
-        if (!newValue.equals(trueValue)) {
-            fail();
-        }
-
-        if (scooterAccessController.closeScooterSessionAndMakePayment(1)) {
-            fail();
-        }
-
-
-    }
-
-
-    @Test
-    void tryMakePayment() {
-
-        BigDecimal oldValue = bankAPI.getBankAccounts().get(scooterAccessController.getUsersDAO().getUserById(1).getBankAccount());
-
-        BigDecimal fstValueToSubstract = BigDecimal.valueOf(2).setScale(3, BigDecimal.ROUND_HALF_UP);
-        BigDecimal sndValueToSubstract = BigDecimal.valueOf(3).setScale(3, BigDecimal.ROUND_HALF_UP);
-        BigDecimal initValue = BigDecimal.valueOf(100);
-
-        System.out.println(bankAPI.getBankAccounts().get(scooterAccessController.getUsersDAO().getUserById(1).getBankAccount()));
-
-        scooterAccessController.tryMakePayment(1, fstValueToSubstract);
-
-        BigDecimal trueValue1 = initValue.subtract(fstValueToSubstract);
-
-        if (!bankAPI.getBankAccounts().get(scooterAccessController.getUsersDAO().getUserById(1).getBankAccount()).equals(trueValue1)) {
-            fail();
-        }
-
-        BigDecimal trueValue2 = trueValue1.subtract(sndValueToSubstract);
-        scooterAccessController.tryMakePayment(1, sndValueToSubstract);
-
-        if (!bankAPI.getBankAccounts().get(scooterAccessController.getUsersDAO().getUserById(1).getBankAccount()).equals(trueValue2)) {
+        if (userRequestController.tryStopScooterRenting(1)) {
             fail();
         }
 
     }
+
 }

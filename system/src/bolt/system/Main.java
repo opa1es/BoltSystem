@@ -131,7 +131,7 @@ public class Main {
         List<ScootersRepresentationObj> availableScootersForUser = userRequestController.getAvailableScooters(userId);
         System.out.println(availableScootersForUser);
         System.out.println(userRequestController.tryRentScooter(userId, requesterScooterId));
-        System.out.println(sessionController.getScooterActiveSessionDataStorage());
+//        System.out.println(sessionController.getScooterActiveSessionDataStorage());
         // WORKS.
         //        scooterRequestController.abortRide(requesterScooterId);
         try {
@@ -191,24 +191,25 @@ public class Main {
 
 //        System.out.println(user1);
 //        System.out.println(user2);
+        System.out.println(bankAPI.getBankAccounts());
 
-        System.out.println(bankAPI.makePayment(bankAccount1, BigDecimal.valueOf(20)));
+        System.out.println(bankAPI.makePayment(bankAccount1, BigDecimal.valueOf(-20)));
         System.out.println(bankAPI.getBankAccounts());
     }
 
 
     public static void main(String[] args) throws InterruptedException {
-//        checkSystem();
+        checkSystem();
 //        checkTimeGetPrice();
 //        checkBankPayment();
-        ScooterStatus activeStatus = ScooterStatus.FREE;
-        ScooterStatus brokenStatus = ScooterStatus.BROKEN;
-
-        Scooter scooter1 = new Scooter((short) 100, new Coordinates(100, 200), activeStatus);
-        Scooter scooter2 = new Scooter((short) 100, new Coordinates(200, 200), brokenStatus);
-
-        System.out.println(scooter1.getCoordinates());
-        System.out.println(scooter2.getCoordinates());
+//        ScooterStatus activeStatus = ScooterStatus.FREE;
+//        ScooterStatus brokenStatus = ScooterStatus.BROKEN;
+//
+//        Scooter scooter1 = new Scooter((short) 100, new Coordinates(100, 200), activeStatus);
+//        Scooter scooter2 = new Scooter((short) 100, new Coordinates(200, 200), brokenStatus);
+//
+//        System.out.println(scooter1.getCoordinates());
+//        System.out.println(scooter2.getCoordinates());
 
 
     }
